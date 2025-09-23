@@ -1,9 +1,11 @@
-import "./App.css";
+import "./index.css";
 
 function App() {
   return (
     <>
-      <p>Hello</p>
+      <div className="bg-yellow-800">
+        <p>Hello</p>
+      </div>
     </>
   );
 }
