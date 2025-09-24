@@ -1,19 +1,30 @@
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 const app = express();
 
-mongoose
-  .connect(
-    "mongodb+srv://dsmeshilmaring13_db_user:7G4IAenOiglH0csG@cluster0.hgdnbwo.mongodb.net/"
-  )
-  .then(() => {
-    console.log("Connect success");
-  })
-  .catch((err) => console.log("Connect Error: ", err));
+// middlewares
+app.use(cors());
+app.use(express.json()); // important if you send/receive JSON
 
-app.use("/", (req, res, next) => {
-  res.send("Hello from back end");
+// simple route
+app.get("/", (req, res) => {
+  res.send("Hello from backend");
 });
 
-app.listen(8000, () => console.log("Server is port at: 8000"));
+// MongoDB connection
+mongoose
+  .connect(
+    "mongodb+srv://dsmeshilmaring13_db_user:7G4IAenOiglH0csG@cluster0.hgdnbwo.mongodb.net/test", // <-- add DB name (e.g. 'test')
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log("MongoDB connected ✅");
+  })
+  .catch((err) => console.error("MongoDB connection error ❌:", err));
+
+app.listen(8000, () => console.log("Server running on port 8000"));

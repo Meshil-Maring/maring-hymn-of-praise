@@ -2,7 +2,7 @@ const Home = () => {
   return (
     <>
       <div>
-        <p className="bg-yellow-200">Hello Meshil Maring</p>
+        <h1 className="">Maring Hymn of Praise</h1>
       </div>
     </>
   );
