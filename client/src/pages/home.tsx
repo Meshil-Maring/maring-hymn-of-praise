@@ -1,8 +1,11 @@
+import Header from "../component/nav/Header";
+
 const Home = () => {
   return (
     <>
+      <Header />
       <div>
-        <h1 className="">Maring Hymn of Praise</h1>
+        <h1 className=""></h1>
       </div>
     </>
   );
