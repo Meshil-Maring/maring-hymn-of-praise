@@ -1,5 +1,6 @@
 export const COLORS = {
-  primary: "#6C6C6C",
+  bgLight: "#f5f5f5",
+  primary: "#010101",
+  active: "#8888",
+  white: "#fff",
 };
-
-export type ColorKeys = keyof typeof COLORS;

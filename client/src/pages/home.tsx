@@ -1,14 +1,12 @@
-import Header from "../component/nav/Header";
+import Header from "../component/nav/header/Header";
+import Category from "../component/nav/header/Category";
 
 const Home = () => {
   return (
-    <>
+    <div className="bg-bg-light">
       <Header />
-
-      <div>
-        <h1 className=""></h1>
-      </div>
-    </>
+      <Category />
+    </div>
   );
 };
 
