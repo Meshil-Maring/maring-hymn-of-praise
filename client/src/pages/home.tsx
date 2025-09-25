@@ -4,6 +4,7 @@ const Home = () => {
   return (
     <>
       <Header />
+
       <div>
         <h1 className=""></h1>
       </div>

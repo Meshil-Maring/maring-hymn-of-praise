@@ -8,6 +8,9 @@ my-app/
 │   ├─ favicon.ico
 │   └─ assets/         # Static images, fonts, icons
 ├─ src/
+|   ├─constants
+|   |   ├─ color.ts
+|   |   └─ config.js
 │   ├─ api/            # API calls / services
 │   │   ├─ axios.js
 │   │   └─ authApi.js
