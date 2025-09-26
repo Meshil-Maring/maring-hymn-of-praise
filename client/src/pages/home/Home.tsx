@@ -1,5 +1,5 @@
-import Header from "../component/nav/header/Header";
-import Category from "../component/nav/header/Category";
+import Header from "../../component/nav/header/Header";
+import Category from "./Category";
 
 const activeHandler = ({ id }: { id: String | Number }) => {
   console.log(String(id));
