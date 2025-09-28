@@ -1,25 +1,29 @@
 import ListItem from "./ListItem";
 
 const ListView = () => {
-  type Bookmark = string[];
+  type BookmarkList = string[];
 
-  const bookmark: Bookmark = [];
+  const bookmarkList: BookmarkList = [];
 
-  type AddBookmarkHandlerProps = (id: string) => void;
+  type AddBookmarkListHandlerProps = (id: string) => void;
 
-  const addBookmarkHandler: AddBookmarkHandlerProps = (id) => {
-    const idFound = bookmark.includes(id);
+  // handling bookmarkList add and remove
+  const addBookmarkListHandler: AddBookmarkListHandlerProps = (id) => {
+    const idFound = bookmarkList.includes(id);
 
     if (!idFound) {
-      bookmark.push(id);
+      bookmarkList.push(id);
     } else {
-      const index = bookmark.indexOf(id);
+      const index = bookmarkList.indexOf(id);
       if (index > -1) {
-        bookmark.splice(index, 1);
+        bookmarkList.splice(index, 1);
       }
     }
+  };
 
-    console.log(bookmark);
+  // check bookmark
+  const checkBookmark = (id: string) => {
+    return bookmarkList.includes(id);
   };
 
   return (
@@ -28,21 +32,8 @@ const ListView = () => {
         id={"001"}
         title={"Meshil"}
         even={true}
-        cb={addBookmarkHandler}
-      />
-
-      <ListItem
-        id={"002"}
-        title={"Meshil"}
-        even={false}
-        cb={addBookmarkHandler}
-      />
-
-      <ListItem
-        id={"003"}
-        title={"Meshil"}
-        even={true}
-        cb={addBookmarkHandler}
+        cb={addBookmarkListHandler}
+        bookmark={checkBookmark("001")}
       />
     </div>
   );

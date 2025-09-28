@@ -7,15 +7,16 @@ type ListItemProps = {
   id: string | number;
   even: boolean;
   cb: Function;
+  bookmark: boolean;
 };
 
-const ListItem = ({ title, id, even, cb }: ListItemProps) => {
-  const [bookmark, setBookmark] = useState(false);
+const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
+  const [bookmarkValue, setBookmarkValue] = useState(bookmark);
   type BookmarkHandlerProps = () => void;
 
   // handling bookmark
   const bookmarkHandler: BookmarkHandlerProps = () => {
-    setBookmark(!bookmark);
+    setBookmarkValue(!bookmarkValue);
     cb(id);
   };
 
