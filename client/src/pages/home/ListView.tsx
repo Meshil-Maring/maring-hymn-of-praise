@@ -3,7 +3,7 @@ import ListItem from "./ListItem";
 
 type BookmarkList = string[];
 
-const ListView = () => {
+const ListView = ({ listType }: { listType: string }) => {
   const [bookmarkList, setBookmarkList] = useState<BookmarkList>([]);
   const [listData, setListData] = useState<{ id: string; title: string }[]>([]);
 
@@ -13,6 +13,16 @@ const ListView = () => {
       .then((res) => res.json())
       .then((data) => setListData(data));
   }, []);
+
+  console.log(listType);
+
+  if (listType === "Numerical") {
+    listData.sort((a, b) => a.id.localeCompare(b.id));
+  }
+
+  if (listType === "Alphabetical") {
+    listData.sort((a, b) => a.title.localeCompare(b.title));
+  }
 
   // handling bookmarkList add and remove
   const addBookmarkListHandler = (id: string) => {

@@ -12,7 +12,7 @@ interface CategoryProps {
 }
 
 const Category = ({ activeHandler }: CategoryProps) => {
-  const [active, setActive] = useState("number");
+  const [active, setActive] = useState("Numerical");
 
   const clickHandler = ({ id }: { id: string | number }) => {
     setActive(String(id));
@@ -21,11 +21,11 @@ const Category = ({ activeHandler }: CategoryProps) => {
   };
 
   return (
-    <ul className="p-2 flex gap-3 w-full overflow-x-auto">
+    <ul className="p-2 flex gap-3 w-full overflow-x-auto overflow-hidden">
       {Object.entries(list).map(([key, value]) => (
         <li key={key}>
-          <button onClick={() => clickHandler({ id: key })}>
-            <CategoryList name={value} active={active === String(key)} />
+          <button onClick={() => clickHandler({ id: value })}>
+            <CategoryList name={value} active={active === String(value)} />
           </button>
         </li>
       ))}
