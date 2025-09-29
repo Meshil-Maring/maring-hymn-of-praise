@@ -9,12 +9,10 @@ const ListView = ({ listType }: { listType: string }) => {
 
   // load JSON once
   useEffect(() => {
-    fetch("/topical-index.json")
+    fetch("/index.json")
       .then((res) => res.json())
       .then((data) => setListData(data));
   }, []);
-
-  console.log(listType);
 
   if (listType === "Numerical") {
     listData.sort((a, b) => a.id.localeCompare(b.id));
@@ -39,7 +37,7 @@ const ListView = ({ listType }: { listType: string }) => {
     <div className="bg-white w-full py-4 mt-2 rounded-t-2xl h-full overflow-y-auto">
       {listData.map((ele, index) => (
         <ListItem
-          key={ele.id}
+          key={index}
           title={ele.title}
           id={ele.id}
           even={index % 2 === 0}
