@@ -26,7 +26,9 @@ const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
       style={{ backgroundColor: `${even ? COLORS.bgAlpha : "transparent"}` }}
     >
       <button className="flex  gap-4 items-center">
-        <label className="bg-yellow px-3 py-1 rounded-r-md">{id}</label>
+        <label className="bg-yellow py-1 rounded-r-md w-10 text-center">
+          {id}
+        </label>
         <p className="">{title}</p>
       </button>
 
