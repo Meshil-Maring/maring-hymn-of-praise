@@ -222,10 +222,49 @@
       {
         "id": 384,
         "title": "Christ, The Fountain"
+      },
+      {
+        "id": 130,
+        "title": "Have You Been To Jesus"
+      },
+      {
+        "id": 372,
+        "title": "I Hear Thy Welcome Voice"
+      },
+      {
+        "id": 159,
+        "title": "There is a Fountain"
+      },
+      {
+        "id": 42,
+        "title": "Would You Be Free"
       }
     ]
   },
-
+  {
+    "category": "confort",
+    "list": [
+      { "id": 165, "title": "Be Not Dismayed" },
+      { "id": 35, "title": "Casting all your Cares" },
+      { "id": 212, "title": "Comfort ye One Another" },
+      { "id": 341, "title": "Come Unto Me" },
+      { "id": 27, "title": "Count Your Blessing" },
+      { "id": 188, "title": "Does Jesus Care?" },
+      { "id": 299, "title": "God Will Take Care of You" },
+      { "id": 76, "title": "He is My Guide" },
+      { "id": 325, "title": "Him That Cometh Unto Me" },
+      { "id": 163, "title": "I Hope to Meet You all" },
+      { "id": 276, "title": "It Is Well With My Soul" },
+      { "id": 323, "title": "Never Alone" },
+      { "id": 310, "title": "Never Thirst Again" },
+      { "id": 211, "title": "Rejoice in The Lord" },
+      { "id": 7, "title": "The Coronation Day" },
+      { "id": 70, "title": "The Lord is My Shepherd" },
+      { "id": 434, "title": "The Lord's My Shepherd" },
+      { "id": 374, "title": "Wait and Murmuring Not" },
+      { "id": 287, "title": "What A Friend We Have" }
+    ]
+  },
   {
     "category": "decision",
     "list": [

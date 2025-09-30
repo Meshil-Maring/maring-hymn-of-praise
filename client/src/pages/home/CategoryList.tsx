@@ -1,3 +1,5 @@
+import DropIcon from "../../assets/icons/drop";
+
 type CategoryListProps = {
   active?: boolean;
   name: string;
@@ -5,13 +7,15 @@ type CategoryListProps = {
 
 const CategoryList = ({ active = false, name }: CategoryListProps) => {
   return (
-    <li
-      className={`${
-        active ? "bg-active text-white" : "bg-white text-primary"
-      } p-1 rounded-full px-5 text-white"`}
-    >
-      {name}
-    </li>
+    <>
+      <li
+        className={`${
+          active ? "bg-active text-white" : "bg-white text-primary"
+        } p-1 rounded-full px-5 text-white"`}
+      >
+        {name}
+      </li>
+    </>
   );
 };
 

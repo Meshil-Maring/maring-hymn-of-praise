@@ -1,68 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryList from "./CategoryList";
+import DropIcon from "../../assets/icons/drop";
 
 const list = {
   number: "Numerical",
   alphabet: "Alphabetical",
-};
-
-const topicalIndex = {
-  adoration: "Adoration",
-  assurandce: "Assurence/Promise",
-  atonement: "Atonement",
-  baptismalHymn: "Baptismal Hymn",
-  bilble: "Bible/Gospel",
-  challenge: "challenge",
-  childrensHymn: "Children's Hymn",
-  choruses: "Choruses",
-  christmas: "Christmas",
-  church: "Church",
-  cleansing: "Cleansing",
-  comfort: "Comfort",
-  consecration: "Consecration",
-  cross: "Cross/Good Friday",
-  decision: "Decision",
-  dedicationalHymn: "Dedicational Hymn",
-  devotion: "Devotion",
-  easter: "Easter/Resurrection",
-  evangelism: "Evangelism/Missionary",
-  faith: "Faith",
-  farewel: "Farewel",
-  fathersday: "Father's Day",
-  friendship: "Friendship",
-  funeral: "Funeral",
-  god: "God/Father",
-  grace: "Grace",
-  heaven: "Heaven/Home",
-  holyCommunion: "Holy Communion/Lord's",
-  holySpirit: "Holy Spirit",
-  invitation: "Invitation",
-  jesusChrist: "Jesus Christ/Saviour",
-  joyAndPeace: "Joy and Peace",
-  jubileeHymn: "Jubilee Hymn",
-  love: "Love",
-  loyalty: "Loyalty",
-  mothersDay: "Mother's Day",
-  newYear: "New Year",
-  orination: "Orination",
-  palmSunday: "Palm Sunday",
-  passover: "Passover",
-  pattiotism: "Pattiotism/Socialibity",
-  prayer: "Prayer",
-  processioalHymns: "Processioal Hymns",
-  redemption: "Redemption",
-  repentance: "Repentance",
-  salvation: "Salvation",
-  secondComing: "Second Coming",
-  security: "Security",
-  soulWinning: "Soul Winning",
-  stewardship: "Stewardship/Offering",
-  thanksgiving: "Thanksgiving",
-  victory: "Victory",
-  warfare: "Warefare",
-  weddingHymns: "Wedding Hymns",
-  welcome: "Welcome/Greeting",
-  youth: "Youth",
 };
 
 interface CategoryProps {
@@ -71,6 +13,7 @@ interface CategoryProps {
 
 const Category = ({ activeHandler }: CategoryProps) => {
   const [active, setActive] = useState("Numerical");
+  const [topical, setTopical] = useState();
 
   const clickHandler = ({ id }: { id: string | number }) => {
     setActive(String(id));
@@ -78,15 +21,32 @@ const Category = ({ activeHandler }: CategoryProps) => {
     activeHandler({ id: id });
   };
 
+  useEffect(() => {
+    fetch("/topical_index.json")
+      .then((res) => res.json())
+      .then((data) => setTopical(data));
+  }, []);
+
   return (
     <ul className="p-2 flex gap-3 w-full overflow-x-auto overflow-hidden">
       {Object.entries(list).map(([key, value]) => (
-        <li key={key}>
-          <button onClick={() => clickHandler({ id: value })}>
-            <CategoryList name={value} active={active === String(value)} />
-          </button>
-        </li>
+        <button key={key} onClick={() => clickHandler({ id: value })}>
+          <CategoryList name={value} active={active === String(value)} />
+        </button>
       ))}
+
+      {/* <button
+        // className={`${
+        //   active ? "bg-active text-white" : "bg-white text-primary"
+        // } p-1 rounded-full px-5 text-white"`}
+      >
+        Default
+      </button> */}
+
+      <button className="bg-white flex rounded-full p-1 h-8 px-5 pr-2 justify-between gap-1">
+        <li className="text-zinc-800">Default</li>
+        <DropIcon fill="#8888" />
+      </button>
     </ul>
   );
 };
