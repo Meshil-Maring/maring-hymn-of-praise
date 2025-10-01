@@ -1,5 +1,3 @@
-import DropIcon from "../../assets/icons/drop";
-
 type CategoryListProps = {
   active?: boolean;
   name: string;

@@ -34,7 +34,7 @@ const ListView = ({ listType }: { listType: string }) => {
   const checkBookmark = (id: string) => bookmarkList.includes(id);
 
   return (
-    <div className="bg-white w-full py-4 mt-2 rounded-t-2xl h-full overflow-y-auto">
+    <div className="bg-white z-0 w-full py-4 mt-2 rounded-t-2xl h-full overflow-y-auto">
       {listData.map((ele, index) => (
         <ListItem
           key={index}

@@ -22,7 +22,7 @@ const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
 
   return (
     <li
-      className="flex justify-between pr-4 py-2"
+      className="flex justify-between pr-4 py-2 z-0"
       style={{ backgroundColor: `${even ? COLORS.bgAlpha : "transparent"}` }}
     >
       <button className="flex  gap-4 items-center">
