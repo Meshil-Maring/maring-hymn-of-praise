@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CategoryList from "./CategoryList";
-import DropIcon from "../../assets/icons/drop";
-import DropDown from "./DropDown";
+import DownIcon from "../../assets/icons/drop";
+import UpIcon from "../../assets/icons/up";
 
 const list = {
   number: "Numerical",
@@ -14,8 +14,10 @@ interface CategoryProps {
 
 const Category = ({ activeHandler }: CategoryProps) => {
   const [active, setActive] = useState("Numerical");
-  const [topical, setTopical] = useState();
+  const [topicalDisplay, setTopicalDisplay] = useState<boolean>(false);
+  const [topical, setTopical] = useState<Array<{ category: string }>>([]);
 
+  // Fetching the data from Topical Index
   useEffect(() => {
     fetch("/topical_index.json")
       .then((res) => res.json())
@@ -28,29 +30,46 @@ const Category = ({ activeHandler }: CategoryProps) => {
     activeHandler({ id: id });
   };
 
-  // Drop down typical handler
-  const dropHandler = () => {
-    console.log("Hello");
+  //  typical index handler
+  const displayTopicalHandler = () => {
+    setTopicalDisplay(!topicalDisplay);
+  };
+
+  //topicalDisplayRender is for render the topic list
+  const topicalDisplayRender = () => {
+    if (topicalDisplay && Array.isArray(topical)) {
+      return (
+        <ul className="p-4">
+          {topical.map((ele: { category: string }, key: number) => (
+            <li key={key}>{ele.category}</li>
+          ))}
+        </ul>
+      );
+    } else {
+      return;
+    }
   };
 
   return (
-    <ul className="p-2 flex gap-3 w-full overflow-x-auto z-0">
-      {Object.entries(list).map(([key, value]) => (
-        <button key={key} onClick={() => clickHandler({ id: value })}>
-          <CategoryList name={value} active={active === String(value)} />
+    <>
+      <ul className="p-2 flex gap-3 w-full overflow-x-auto z-0 scrollbar-hidden">
+        {Object.entries(list).map(([key, value]) => (
+          <button key={key} onClick={() => clickHandler({ id: value })}>
+            <CategoryList name={value} active={active === String(value)} />
+          </button>
+        ))}
+
+        <button
+          onClick={displayTopicalHandler}
+          className="bg-amber-100 flex rounded-full p-1 h-8 pl-3 pr-1 justify-between gap-1 relative z-10 flex-nowrap"
+        >
+          <li className="text-zinc-800 whitespace-nowrap">Topical Index</li>
+          {topicalDisplay ? <UpIcon fill="#8888" /> : <DownIcon fill="#8888" />}
         </button>
-      ))}
+      </ul>
 
-      <button
-        onClick={dropHandler}
-        className="bg-white flex rounded-full p-1 h-8 px-5 pr-2 justify-between gap-1 relative z-10"
-      >
-        <li className="text-zinc-400">Topical Index</li>
-        <DropIcon fill="#8888" />
-
-        <aside className="bg-yellow w-[90%] left-0 top-8 absolute z-20 h-3 rounded-t-full"></aside>
-      </button>
-    </ul>
+      {topicalDisplayRender()}
+    </>
   );
 };
 
