@@ -39,11 +39,15 @@ const Category = ({ activeHandler }: CategoryProps) => {
   const topicalDisplayRender = () => {
     if (topicalDisplay && Array.isArray(topical)) {
       return (
-        <ul className="p-4">
-          {topical.map((ele: { category: string }, key: number) => (
-            <li key={key}>{ele.category}</li>
-          ))}
-        </ul>
+        <div className="flex absolute w-full justify-center backdrop-blur-2xl">
+          <ul className="p-4 w-[70vw] h-[80vh] overflow-y-auto rounded-2xl scrollbar-hidden bg-active top-0">
+            {topical.map((ele: { category: string }, key: number) => (
+              <li className="py-2 text-yellow-50" key={key}>
+                {ele.category}
+              </li>
+            ))}
+          </ul>
+        </div>
       );
     } else {
       return;
@@ -51,7 +55,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
   };
 
   return (
-    <>
+    <div className="relative z-30">
       <ul className="p-2 flex gap-3 w-full overflow-x-auto z-0 scrollbar-hidden">
         {Object.entries(list).map(([key, value]) => (
           <button key={key} onClick={() => clickHandler({ id: value })}>
@@ -69,7 +73,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
       </ul>
 
       {topicalDisplayRender()}
-    </>
+    </div>
   );
 };
 
