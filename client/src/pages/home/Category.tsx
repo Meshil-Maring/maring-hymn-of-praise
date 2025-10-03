@@ -42,7 +42,10 @@ const Category = ({ activeHandler }: CategoryProps) => {
         <div className="flex absolute w-full justify-center backdrop-blur-2xl">
           <ul className="p-4 w-[70vw] h-[80vh] overflow-y-auto rounded-2xl scrollbar-hidden bg-active top-0">
             {topical.map((ele: { category: string }, key: number) => (
-              <li className="py-2 text-yellow-50" key={key}>
+              <li
+                className="py-2 text-yellow-50 border-b-1 border-yellow-950"
+                key={key}
+              >
                 {ele.category}
               </li>
             ))}
