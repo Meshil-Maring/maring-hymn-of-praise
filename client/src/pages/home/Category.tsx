@@ -43,7 +43,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
               onClick={() => clickHandler(item)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 active === item
-                  ? "bg-active text-white  shadow-md"
+                  ? "bg-active text-white shadow-md"
                   : "bg-gray-200 text-gray-600 hover:bg-gray-300"
               }`}
             >
