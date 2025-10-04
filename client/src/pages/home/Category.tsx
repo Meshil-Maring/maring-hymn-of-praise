@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import CategoryList from "./CategoryList";
-import DropIcon from "../../assets/icons/drop";
-import DropDown from "./DropDown";
 
 const list = {
   number: "Numerical",
@@ -13,44 +10,75 @@ interface CategoryProps {
 }
 
 const Category = ({ activeHandler }: CategoryProps) => {
-  const [active, setActive] = useState("Numerical");
-  const [topical, setTopical] = useState();
+  const [active, setActive] = useState<string>("Numerical");
+  const [topicalActive, setTopicalActive] = useState<boolean>(false);
+  interface TopicalItem {
+    category: string;
+    // add other properties if needed
+  }
+  const [topicalData, setTopicalData] = useState<TopicalItem[]>();
 
   useEffect(() => {
-    fetch("/topical_index.json")
+    fetch("./topical_index.json")
       .then((res) => res.json())
-      .then((data) => setTopical(data));
+      .then((data) => setTopicalData(data));
   }, []);
 
-  const clickHandler = ({ id }: { id: string | number }) => {
-    setActive(String(id));
-
-    activeHandler({ id: id });
+  const clickHandler = (id: string) => {
+    setActive(id);
+    activeHandler({ id });
   };
 
-  // Drop down typical handler
-  const dropHandler = () => {
-    console.log("Hello");
+  const TopicalIndexHandler = () => {
+    setTopicalActive(!topicalActive);
   };
 
   return (
-    <ul className="p-2 flex gap-3 w-full overflow-x-auto z-0">
-      {Object.entries(list).map(([key, value]) => (
-        <button key={key} onClick={() => clickHandler({ id: value })}>
-          <CategoryList name={value} active={active === String(value)} />
-        </button>
-      ))}
+    <div className="flex gap-4 p-2 bg-white shadow-sm z-10 relative">
+      {topicalActive ? (
+        <div className="flex gap-2 p-2">
+          {Object.values(list).map((item) => (
+            <button
+              key={item}
+              onClick={() => clickHandler(item)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                active === item
+                  ? "bg-active text-white shadow-md"
+                  : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+              }`}
+            >
+              {item}
+            </button>
+          ))}
 
-      <button
-        onClick={dropHandler}
-        className="bg-white flex rounded-full p-1 h-8 px-5 pr-2 justify-between gap-1 relative z-10"
-      >
-        <li className="text-zinc-400">Topical Index</li>
-        <DropIcon fill="#8888" />
+          <button
+            onClick={TopicalIndexHandler}
+            className="bg-gray-200 rounded-full h-full px-4 py-2"
+          >
+            Topical Index
+          </button>
+        </div>
+      ) : (
+        <div className="flex bg-alpha m-1 w-full justify-start gap-2 rounded-full shadow-inner">
+          <button
+            onClick={TopicalIndexHandler}
+            className="bg-active text-white rounded-full py-2 px-4 flex-nowrap whitespace-nowrap"
+          >
+            Topical Index
+          </button>
 
-        <aside className="bg-yellow w-[90%] left-0 top-8 absolute z-20 h-3 rounded-t-full"></aside>
-      </button>
-    </ul>
+          <div className="w-full max-w-full overflow-x-auto scrollbar-hidden rounded-r-full">
+            <ul className="flex gap-2 min-w-max p-2">
+              {topicalData?.map((item, key: number) => (
+                <li className="px-2 bg-gray-200 rounded-full py-1" key={key}>
+                  {item.category}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
