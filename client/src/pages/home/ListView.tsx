@@ -7,37 +7,33 @@ const ListView = ({ listType }: { listType: string }) => {
   const [bookmarkList, setBookmarkList] = useState<BookmarkList>([]);
   const [listData, setListData] = useState<{ id: string; title: string }[]>([]);
 
-  // load JSON once
   useEffect(() => {
     fetch("/index.json")
       .then((res) => res.json())
-      .then((data) => setListData(data));
+      .then((data) => setListData(data))
+      .catch((err) => console.error("Error loading JSON:", err));
   }, []);
 
-  if (listType === "Numerical") {
-    listData.sort((a, b) => a.id.localeCompare(b.id));
-  }
+  // Sorting logic
+  const sortedData = [...listData].sort((a, b) =>
+    listType === "Numerical"
+      ? a.id.localeCompare(b.id)
+      : a.title.localeCompare(b.title)
+  );
 
-  if (listType === "Alphabetical") {
-    listData.sort((a, b) => a.title.localeCompare(b.title));
-  }
-
-  // handling bookmarkList add and remove
   const addBookmarkListHandler = (id: string) => {
     setBookmarkList((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
-
-    console.log(bookmarkList);
   };
 
   const checkBookmark = (id: string) => bookmarkList.includes(id);
 
   return (
-    <div className="bg-white z-0 w-full py-4 mt-2 rounded-t-2xl h-full overflow-y-auto scrollbar-hidden">
-      {listData.map((ele, index) => (
+    <div className="bg-white relative z-10 w-full py-4 mt-2 rounded-t-2xl h-full overflow-y-auto scrollbar-hidden shadow-sm">
+      {sortedData.map((ele, index) => (
         <ListItem
-          key={index}
+          key={ele.id}
           title={ele.title}
           id={ele.id}
           even={index % 2 === 0}
