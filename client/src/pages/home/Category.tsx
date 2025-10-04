@@ -12,7 +12,11 @@ interface CategoryProps {
 const Category = ({ activeHandler }: CategoryProps) => {
   const [active, setActive] = useState<string>("Numerical");
   const [topicalActive, setTopicalActive] = useState<boolean>(false);
-  const [topicalData, setTopicalData] = useState<string[]>();
+  interface TopicalItem {
+    category: string;
+    // add other properties if needed
+  }
+  const [topicalData, setTopicalData] = useState<TopicalItem[]>();
 
   useEffect(() => {
     fetch("./topical_index.json")
@@ -30,16 +34,16 @@ const Category = ({ activeHandler }: CategoryProps) => {
   };
 
   return (
-    <div className="flex gap-4 p-4 bg-white shadow-sm z-10 relative">
+    <div className="flex gap-4 p-2 bg-white shadow-sm z-10 relative">
       {topicalActive ? (
-        <div className="flex gap-2">
+        <div className="flex gap-2 p-2">
           {Object.values(list).map((item) => (
             <button
               key={item}
               onClick={() => clickHandler(item)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 active === item
-                  ? "bg-yellow-400 text-black shadow-md"
+                  ? "bg-active text-white  shadow-md"
                   : "bg-gray-200 text-gray-600 hover:bg-gray-300"
               }`}
             >
@@ -49,25 +53,25 @@ const Category = ({ activeHandler }: CategoryProps) => {
 
           <button
             onClick={TopicalIndexHandler}
-            className="bg-amber-100 rounded-full h-full px-4 py-2"
+            className="bg-gray-200 rounded-full h-full px-4 py-2"
           >
             Topical Index
           </button>
         </div>
       ) : (
-        <div className="flex items-center bg-alpha  w-full justify-start gap-2 rounded-full shadow-inner">
+        <div className="flex bg-alpha m-1 w-full justify-start gap-2 rounded-full shadow-inner">
           <button
             onClick={TopicalIndexHandler}
-            className="bg-amber-100 rounded-full h-full px-4 py-1 flex-nowrap whitespace-nowrap"
+            className="bg-active text-white rounded-full py-2 px-4 flex-nowrap whitespace-nowrap"
           >
             Topical Index
           </button>
 
-          <div className="w-full max-w-full overflow-x-auto rounded-full scrollbar-hidden">
+          <div className="w-full max-w-full overflow-x-auto scrollbar-hidden rounded-r-full">
             <ul className="flex gap-2 min-w-max p-2">
-              {topicalData?.map((ele: string, key: number) => (
-                <li className="bg-yellow px-2 rounded-full py-1" key={key}>
-                  {ele.category}
+              {topicalData?.map((item, key: number) => (
+                <li className="px-2 bg-gray-200 rounded-full py-1" key={key}>
+                  {item.category}
                 </li>
               ))}
             </ul>
