@@ -11,9 +11,9 @@ const Navigation = () => (
       <p> PRAISE OUR CREATOR</p>
     </div>
 
-    <div className="flex gap-1">
+    <div className="flex gap-2 items-center">
       <StarIcon />
-      <EditIcon />
+      <EditIcon fill="black" size={20} />
     </div>
   </nav>
 );

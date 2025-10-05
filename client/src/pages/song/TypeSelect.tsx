@@ -8,7 +8,7 @@ const TypeSelect = () => {
   };
 
   return (
-    <div className="flex rounded-lg m-auto bg-bg-alpha mt-2 justify-start w-fit shadow-inner">
+    <div className="flex rounded-lg mx-auto bg-bg-alpha mt-2 justify-start shadow-inner">
       <button
         className={`${
           songActive ? "rounded-l-lg bg-active text-white m-[2px]" : ""
