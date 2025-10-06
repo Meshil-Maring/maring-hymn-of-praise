@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { Home } from "../controllers/home";
+import { Song } from "../controllers/song";
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("Welcome to Maring Hymn of Praise API ");
-});
+router.get("/", Home);
+router.get("/song/:id", Song);
 
 export default router;
