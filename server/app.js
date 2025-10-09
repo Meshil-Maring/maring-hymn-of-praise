@@ -2,15 +2,23 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const mainRoutes = require("./routes/main-routes");
+
 const app = express();
 
-app.use("/", (req, res) => res.send("hello"));
+// Middleware
+app.use(cors());
+app.use(express.json());
 
+// Routes
+app.use("/", mainRoutes);
+
+// MongoDB connection
 mongoose
   .connect(
-    "mongodb+srv://dsmeshilmaring13_db_user:7G4IAenOiglH0csG@cluster0.hgdnbwo.mongodb.net/"
+    "mongodb+srv://dsmeshilmaring13_db_user:7G4IAenOiglH0csG@cluster0.hgdnbwo.mongodb.net/myDatabase?retryWrites=true&w=majority"
   )
-  .then((res) => console.log("Connected to DB"))
-  .catch((err) => console.log(err));
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-app.listen(8000, () => console.log("Port : 8000"));
+app.listen(8000, () => console.log("🚀 Server running on port 8000"));
