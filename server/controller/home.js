@@ -1,3 +1,11 @@
+const Song = require("../model/song");
+
 exports.home = async (req, res) => {
-  res.send("Hello from backend");
+  try {
+    const data = await Song.find();
+
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+  }
 };
