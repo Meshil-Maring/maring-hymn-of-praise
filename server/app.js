@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 // MongoDB connection
 mongoose
   .connect(
-    "mongodb+srv://dsmeshilmaring13_db_user:7G4IAenOiglH0csG@cluster0.hgdnbwo.mongodb.net/test", // <-- add DB name (e.g. 'test')
+    "mongodb+srv://dsmeshilmaring13_db_user:7G4IAenOiglH0csG@cluster0.hgdnbwo.mongodb.net/test",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
