@@ -1,28 +1,22 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "This project for Maring Hymn of Praise",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "dev": "nodemon --exec ts-node app.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js"
   },
-  "author": "",
+  "author": "Meshil Maring",
   "license": "ISC",
+  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^17.2.2",
+    "dotevn": "^0.0.1-security",
     "express": "^5.1.0",
-    "mongodb": "^6.20.0",
-    "mongoose": "^8.19.0"
+    "mongoose": "^8.19.1"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
-    "@types/node": "^24.7.0",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "nodemon": "^3.1.10"
   }
 }
