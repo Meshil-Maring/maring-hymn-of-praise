@@ -1,9 +1,6 @@
-const Song = require("../model/song");
-
 exports.home = async (req, res) => {
   try {
-    const data = await Song.find();
-
+    const data = "Home page";
     res.json(data);
   } catch (err) {
     console.log(err);
