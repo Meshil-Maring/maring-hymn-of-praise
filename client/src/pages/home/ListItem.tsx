@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import StarIcon from "../../assets/icons/star";
 import { COLORS } from "../../constants/color";
 
@@ -11,8 +13,15 @@ type ListItemProps = {
 };
 
 const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
+  const navigate = useNavigate();
+
   const [bookmarkValue, setBookmarkValue] = useState(bookmark);
+
   type BookmarkHandlerProps = () => void;
+
+  const nevigateToSong = (id: string | number) => {
+    navigate(`/song/${id}`);
+  };
 
   // handling bookmark
   const bookmarkHandler: BookmarkHandlerProps = () => {
@@ -23,9 +32,14 @@ const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
   return (
     <li
       className="flex justify-between pr-4 py-2 z-0"
-      style={{ backgroundColor: `${even ? COLORS.bgAlpha : "transparent"}` }}
+      style={{
+        backgroundColor: `${even ? COLORS.bgAlpha : "transparent"}`,
+      }}
     >
-      <button className="flex  gap-4 items-center">
+      <button
+        onClick={() => nevigateToSong(id)}
+        className="flex  gap-4 items-center"
+      >
         <label className="bg-yellow py-1 rounded-r-md w-10 text-center">
           {id}
         </label>
