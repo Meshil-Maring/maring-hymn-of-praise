@@ -72,7 +72,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
       </button>
 
       <div className="w-full max-w-full overflow-x-auto scrollbar-hidden rounded-r-full">
-        <ul className="flex gap-2 min-w-max p-2">
+        <ul className="flex gap-2 min-w-max p-2 cursor-pointer">
           {topicalData?.map((item, key: number) => (
             <li className="px-2 bg-gray-200 rounded-full py-1" key={key}>
               {item.category}

@@ -9,7 +9,7 @@ const CategoryList = ({ active = false, name }: CategoryListProps) => {
       <li
         className={`${
           active ? "bg-active text-white" : "bg-white text-primary"
-        } p-1 rounded-full px-5 text-white"`}
+        } p-1 rounded-full px-5 text-white cursor-pointer"`}
       >
         {name}
       </li>

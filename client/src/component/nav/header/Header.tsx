@@ -1,24 +1,54 @@
+import { useState } from "react";
+
 import MenuIcon from "../../../assets/icons/menu";
 import SearchIcon from "../../../assets/icons/search";
 import StarIcon from "../../../assets/icons/star";
+import CloseIcon from "../../../assets/icons/close";
 
 import { COLORS } from "../../../constants/color";
 
 const Header = () => {
-  const searchHandler = () => {};
+  const [searchActive, setSearchActive] = useState<boolean>(false);
+
+  const searchHandler = () => {
+    setSearchActive(!searchActive);
+  };
 
   return (
     <>
-      <header className="bg-white flex p-4 justify-between">
+      <header className="flex h-18 gap-1 items-center justify-between px-2">
         <MenuIcon fill={COLORS.primary} stroke={COLORS.primary} size={24} />
-        <h1 className="text-lg font-bold">DUNPUYA MATHANGNA LAA</h1>
 
-        <div className="flex gap-4">
-          <button onClick={searchHandler}>
-            <SearchIcon stroke={COLORS.primary} />
-          </button>
-          <StarIcon fill={COLORS.primary} stroke={COLORS.primary} />
-        </div>
+        {!searchActive ? (
+          <div className="flex flex-grow justify-between items-center px-4">
+            <h1 className="text-lg font-bold text-center w-full">
+              DUNPUYA MATHANGNA LAA
+            </h1>
+
+            <button className="ml-auto" onClick={searchHandler}>
+              <SearchIcon stroke={COLORS.primary} />
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-grow gap-2 h-9 pl-2">
+            <div className="flex w-full items-center pl-2 rounded-full bg-white">
+              <SearchIcon stroke={COLORS.active} />
+              <input
+                className="w-full mr-2 border-none focus:outline-none"
+                placeholder="Seach..."
+              ></input>
+            </div>
+
+            <button
+              className="bg-white rounded-full h-9 w-11 flex justify-center items-center"
+              onClick={searchHandler}
+            >
+              <CloseIcon />
+            </button>
+          </div>
+        )}
+
+        <StarIcon fill={COLORS.primary} stroke={COLORS.primary} />
       </header>
     </>
   );
