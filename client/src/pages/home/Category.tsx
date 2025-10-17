@@ -37,12 +37,12 @@ const Category = ({ activeHandler }: CategoryProps) => {
   // Rendring the data
   // Rendering Order Fomate
   const RenderingOrderFormate = () => (
-    <div className="flex gap-2 p-2">
+    <div className="flex gap-2 p-2 items-center">
       {Object.values(list).map((item) => (
         <button
           key={item}
           onClick={() => clickHandler(item)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 h-9 ${
             active === item
               ? "bg-active text-white shadow-md"
               : "bg-gray-200 text-gray-600 hover:bg-gray-300"
@@ -54,7 +54,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
 
       <button
         onClick={TopicalIndexHandler}
-        className="bg-gray-200 rounded-full h-full px-4 py-2"
+        className="bg-gray-200 rounded-full h-9 px-4 py-2 text-nowrap"
       >
         Topical Index
       </button>
@@ -84,7 +84,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
   );
 
   return (
-    <div className="flex gap-4 p-2 bg-white shadow-sm z-10 relative">
+    <div className="flex gap-4 bg-white shadow-sm z-10 relative overflow-x-auto scrollbar-hidden h-18">
       {topicalActive ? <RenderingOrderFormate /> : <RenderingTopicalIndex />}
     </div>
   );

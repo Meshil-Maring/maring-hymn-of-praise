@@ -9,10 +9,15 @@ import { COLORS } from "../../../constants/color";
 
 const Header = () => {
   const [searchActive, setSearchActive] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>("");
 
-  const searchHandler = () => {
+  const searchClickHandler = () => {
     setSearchActive(!searchActive);
   };
+
+  function searchHandler(event: string) {
+    setSearchInput(event.target.value);
+  }
 
   return (
     <>
@@ -25,7 +30,7 @@ const Header = () => {
               DUNPUYA MATHANGNA LAA
             </h1>
 
-            <button className="ml-auto" onClick={searchHandler}>
+            <button className="ml-auto" onClick={searchClickHandler}>
               <SearchIcon stroke={COLORS.primary} />
             </button>
           </div>
@@ -34,14 +39,16 @@ const Header = () => {
             <div className="flex w-full items-center pl-2 rounded-full bg-white">
               <SearchIcon stroke={COLORS.active} />
               <input
+                onChange={searchHandler}
                 className="w-full mr-2 border-none focus:outline-none"
-                placeholder="Seach..."
+                placeholder="Search..."
+                type="text"
               ></input>
             </div>
 
             <button
               className="bg-white rounded-full h-9 w-11 flex justify-center items-center"
-              onClick={searchHandler}
+              onClick={searchClickHandler}
             >
               <CloseIcon />
             </button>
