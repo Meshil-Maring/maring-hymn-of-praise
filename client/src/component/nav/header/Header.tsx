@@ -17,11 +17,11 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex h-18 gap-1 items-center justify-between px-2">
-        <MenuIcon fill={COLORS.primary} stroke={COLORS.primary} size={24} />
-
+      <header className="flex h-18 items-center justify-between px-2">
         {!searchActive ? (
-          <div className="flex flex-grow justify-between items-center px-4">
+          <div className="flex flex-grow justify-between items-center px-4 gap-2">
+            <MenuIcon fill={COLORS.primary} stroke={COLORS.primary} size={24} />
+
             <h1 className="text-lg font-bold text-center w-full">
               DUNPUYA MATHANGNA LAA
             </h1>
@@ -29,12 +29,11 @@ const Header = () => {
             <button className="ml-auto" onClick={searchClickHandler}>
               <SearchIcon stroke={COLORS.primary} />
             </button>
+            <StarIcon fill={COLORS.primary} stroke={COLORS.primary} />
           </div>
         ) : (
           <Search searchClickHandler={searchClickHandler} />
         )}
-
-        <StarIcon fill={COLORS.primary} stroke={COLORS.primary} />
       </header>
     </>
   );
