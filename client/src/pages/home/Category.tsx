@@ -66,7 +66,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
     <div className="flex bg-alpha py-1 m-1 w-full justify-start gap-2 rounded-full shadow-inner text-[12px]">
       <button
         onClick={TopicalIndexHandler}
-        className="bg-active text-white rounded-full py-1 px-2 flex-nowrap whitespace-nowrap"
+        className="bg-active text-white rounded-full py-1 px-4 flex-nowrap whitespace-nowrap"
       >
         Topical Index
       </button>
