@@ -32,12 +32,23 @@ const Search = ({ searchClickHandler }: any) => {
     setSearchInput("");
   }
 
+  //  search result render
+  const searchResult = () => (
+    <ul>
+      <li className="w-full bg-yellow flex">
+        <span className="mr-8 text-2xl">1</span>
+        <span className="self-start">Title</span>
+        <span className="ml-auto">Icon</span>
+      </li>
+    </ul>
+  );
+
   return (
     <div className="absolute h-full w-full bg-bg-light z-20 top-0 right-0 px-6 py-5">
-      <div className="flex flex-grow gap-2 h-9">
+      <div className="flex flex-grow gap-2 h-10">
         {searchInput.length ? (
           <button
-            className="bg-white rounded-full h-9 w-11 flex justify-center items-center shadow"
+            className="bg-white rounded-full h-10 w-11 flex justify-center items-center shadow"
             onClick={searchClickHandler}
           >
             <CloseIcon />
@@ -85,13 +96,15 @@ const Search = ({ searchClickHandler }: any) => {
 
         {!searchInput.length && (
           <button
-            className="bg-white rounded-full h-9 w-11 flex justify-center items-center shadow"
+            className="bg-white rounded-full h-10 w-12 flex justify-center items-center shadow"
             onClick={searchClickHandler}
           >
             <CloseIcon />
           </button>
         )}
       </div>
+
+      {searchResult()}
     </div>
   );
 };
