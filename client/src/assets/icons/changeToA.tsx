@@ -1,9 +1,4 @@
-const Icon = ({
-  size = 24,
-  fill = "none",
-  stroke = "currentColor",
-  strokeW = "1.5",
-}) => (
+const Icon = ({ size = 24, fill = "none" }) => (
   <svg
     width={size}
     height={size}
