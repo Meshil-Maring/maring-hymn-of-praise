@@ -12,7 +12,6 @@ const Header = () => {
 
   const searchClickHandler = () => {
     setSearchActive(!searchActive);
-    console.log("Hello");
   };
 
   return (

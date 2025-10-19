@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, use } from "react";
 
 import CloseIcon from "../../../assets/icons/close";
 import ChangeToAIcon from "../../../assets/icons/changeToA";
@@ -8,17 +8,37 @@ import HistoryIcon from "../../../assets/icons/history";
 const Search = ({ searchClickHandler }: any) => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [inputType, setInputType] = useState<string>("text");
+  const [searchFound, setSearchFound] = useState<string[]>();
+  const [searchHistory, setSearchHistory] = useState<string>();
+  const [indexData, setIndexData] = useState<{ id: string; title: string }[]>();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // handling search input
-  function searchHandler(event: string) {
-    setSearchInput(event.target.value);
-  }
+  // fetching index data
+  useEffect(() => {
+    fetch("/index.json")
+      .then((res) => res.json())
+      .then((data) => setIndexData(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   // focus input
   useEffect(() => {
     inputRef.current?.focus();
   }, [inputType]);
+
+  // handling search input
+  function searchHandler(event: string) {
+    let inputValue = event.target.value;
+    setSearchInput(inputValue);
+
+    if (inputType === "text") {
+      let result = indexData?.filter((data) =>
+        data.title.toLowerCase().includes(inputValue.toLowerCase())
+      );
+
+      setSearchFound(result);
+    }
+  }
 
   // change input type
   function inputTypeHandler() {
@@ -31,23 +51,34 @@ const Search = ({ searchClickHandler }: any) => {
   //   clear the text
   function clearInputHandler() {
     setSearchInput("");
+    setSearchFound([]);
   }
 
   //  search result render
-  const searchResult = () => (
-    <ul className="mt-4 flex flex-col justify-between items-center gap-2">
-      <li className="w-ful flex items-center w-full">
-        <p className="mr-6 font-bold bg-yellow text-sm shadow w-9 h-9 rounded-full flex items-center justify-center">
-          461
-        </p>
-        <p className="">PRAISE OUR CREATOR</p>
-        <span className="ml-auto mr-2">
-          <HistoryIcon size={24} />
-        </span>
-      </li>
-      <hr className="w-[80%] border-gray-300"></hr>
-    </ul>
-  );
+  const searchResult = () => {
+    return !searchHistory ? (
+      <ul className="mt-4 flex flex-col justify-between items-center gap-2">
+        {searchFound?.map((items, key) => (
+          <>
+            <a className="flex w-full gap-3 items-center ">
+              <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full flex-shrink-0 text-md font-bold">
+                {items.id}
+              </p>
+
+              <p>{items.title}</p>
+
+              <span className="ml-auto">
+                <HistoryIcon />
+              </span>
+            </a>
+            <hr className="w-[80%] border-gray-300"></hr>
+          </>
+        ))}
+      </ul>
+    ) : (
+      <p className="mt-8 flex flex-col justify-between items-center gap-2"></p>
+    );
+  };
 
   return (
     <div className="absolute h-full w-full bg-bg-light z-20 top-0 right-0 px-6 py-5">
