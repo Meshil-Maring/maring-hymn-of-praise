@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 
 import CloseIcon from "../../../assets/icons/close";
 import ChangeToAIcon from "../../../assets/icons/changeToA";
@@ -8,86 +8,103 @@ import HistoryIcon from "../../../assets/icons/history";
 const Search = ({ searchClickHandler }: any) => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [inputType, setInputType] = useState<string>("text");
-  const [searchFound, setSearchFound] = useState<string[]>();
   const [searchHistory, setSearchHistory] = useState<string>();
-  const [indexData, setIndexData] = useState<{ id: string; title: string }[]>();
+  const [indexData, setIndexData] = useState<{ id: string; title: string }[]>(
+    []
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // fetching index data
+  // --- Fetch index data only once ---
   useEffect(() => {
     fetch("/index.json")
       .then((res) => res.json())
       .then((data) => setIndexData(data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, []);
 
-  // focus input
+  // --- Focus input when input type changes ---
   useEffect(() => {
     inputRef.current?.focus();
   }, [inputType]);
 
-  // handling search input
-  function searchHandler(event: string) {
-    let inputValue = event.target.value;
-    setSearchInput(inputValue);
+  // --- Debounced search input ---
+  const [debouncedInput, setDebouncedInput] = useState(searchInput);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedInput(searchInput);
+    }, 200); // 200ms debounce delay
+    return () => clearTimeout(timer);
+  }, [searchInput]);
 
-    if (inputType === "text") {
-      let result = indexData?.filter((data) =>
-        data.title.toLowerCase().includes(inputValue.toLowerCase())
-      );
-
-      setSearchFound(result);
-    }
+  // --- Handle input change ---
+  function searchHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchInput(e.target.value);
   }
 
-  // change input type
-  function inputTypeHandler() {
-    if (inputType === "text") setInputType("number");
-    else setInputType("text");
+  // --- Filter results using memoization ---
+  const searchFound = useMemo(() => {
+    if (!debouncedInput.trim() || !indexData.length) return [];
 
+    const inputValue = debouncedInput.toLowerCase();
+    if (inputType === "text") {
+      return indexData.filter(
+        (data) =>
+          data.title.toLowerCase().includes(inputValue) ||
+          data.id.includes(inputValue)
+      );
+    } else {
+      return indexData.filter((data) => data.id.includes(inputValue));
+    }
+  }, [debouncedInput, inputType, indexData]);
+
+  // --- Change input type ---
+  function inputTypeHandler() {
+    setInputType((prev) => (prev === "text" ? "number" : "text"));
     setSearchInput("");
   }
 
-  //   clear the text
+  // --- Clear input ---
   function clearInputHandler() {
     setSearchInput("");
-    setSearchFound([]);
   }
 
-  // search result render
+  // --- Highlight matched text (memoized) ---
+  const highlightMatch = useMemo(() => {
+    return (text: string) => {
+      if (!debouncedInput) return text;
+      const regex = new RegExp(`(${debouncedInput})`, "gi");
+      return text.replace(
+        regex,
+        '<span class="bg-yellow-200 text-black font-semibold">$1</span>'
+      );
+    };
+  }, [debouncedInput]);
+
+  // --- Render search results ---
   const searchResult = () => {
     return !searchHistory ? (
       <ul className="mt-4 flex flex-col justify-between items-center gap-2 overflow-y-auto">
-        {searchFound?.map((items, index) => {
-          const regex = new RegExp(`(${searchInput})`, "gi");
-
-          // Replace matched text with a span for highlight
-          const highlightedTitle = items.title.replace(
-            regex,
-            '<span class="bg-yellow-200 text-black font-semibold">$1</span>'
-          );
-
-          return (
-            <li
-              className="w-full flex flex-col  gap-2 justify-center items-center"
-              key={index}
-            >
-              <a key={index} className="flex w-full gap-3">
-                <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full flex-shrink-0 text-md font-bold">
-                  {items.id}
-                </p>
-
-                {/* Render with HTML highlight safely */}
-                <p dangerouslySetInnerHTML={{ __html: highlightedTitle }}></p>
-
-                <span className="ml-auto">
-                  <HistoryIcon />
-                </span>
-              </a>
-              <hr className="w-[80%] border-gray-300"></hr>
-            </li>
-          );
-        })}
+        {searchFound.map((items, index) => (
+          <li
+            className="w-full flex flex-col gap-2 justify-center items-center"
+            key={index}
+          >
+            <a className="flex w-full gap-3 items-center">
+              <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full flex-shrink-0 text-md font-bold">
+                {items.id}
+              </p>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: highlightMatch(items.title),
+                }}
+              ></p>
+              <span className="ml-auto">
+                <HistoryIcon />
+              </span>
+            </a>
+            <hr className="w-[80%] border-gray-300" />
+          </li>
+        ))}
       </ul>
     ) : (
       <p className="mt-8 flex flex-col justify-between items-center gap-2"></p>
@@ -104,9 +121,7 @@ const Search = ({ searchClickHandler }: any) => {
           >
             <CloseIcon />
           </button>
-        ) : (
-          ""
-        )}
+        ) : null}
 
         <div className="flex w-full items-center pl-2 rounded-full bg-white gap-2 shadow">
           <button
@@ -128,8 +143,8 @@ const Search = ({ searchClickHandler }: any) => {
 
           <input
             className="w-full mr-2 border-none focus:outline-none pr-2"
-            max={inputType == "number" ? 461 : undefined}
-            min={inputType == "number" ? 0 : undefined}
+            max={inputType === "number" ? 461 : undefined}
+            min={inputType === "number" ? 0 : undefined}
             ref={inputRef}
             onChange={searchHandler}
             value={searchInput}
@@ -142,9 +157,7 @@ const Search = ({ searchClickHandler }: any) => {
             <button onClick={clearInputHandler} className="pr-3">
               Clear
             </button>
-          ) : (
-            ""
-          )}
+          ) : null}
         </div>
 
         {!searchInput.length && (
