@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import CloseIcon from "../../../assets/icons/close";
 import ChangeToAIcon from "../../../assets/icons/changeToA";
 import ChangeToNIcon from "../../../assets/icons/changeToN";
-import HistoryIcon from "../../../assets/icons/history";
+import SearchIcon from "../../../assets/icons/search";
 
 const Search = ({ searchClickHandler }: any) => {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -83,7 +83,7 @@ const Search = ({ searchClickHandler }: any) => {
   // --- Render search results ---
   const searchResult = () => {
     return !searchHistory ? (
-      <ul className="mt-4 flex flex-col justify-between items-center gap-2 overflow-y-auto">
+      <ul className="mt-4 flex flex-col between items-center gap-2 overflow-y-auto scrollbar-hidden">
         {searchFound.map((items, index) => (
           <li
             className="w-full flex flex-col gap-2 justify-center items-center"
@@ -99,7 +99,7 @@ const Search = ({ searchClickHandler }: any) => {
                 }}
               ></p>
               <span className="ml-auto">
-                <HistoryIcon />
+                <SearchIcon />
               </span>
             </a>
             <hr className="w-[80%] border-gray-300" />
@@ -112,8 +112,8 @@ const Search = ({ searchClickHandler }: any) => {
   };
 
   return (
-    <div className="absolute h-full w-full bg-bg-light z-20 top-0 right-0 px-4 py-5">
-      <div className="flex flex-grow gap-2 h-10">
+    <div className="absolute h-[100vh] w-full bg-bg-light z-20 top-0 right-0 px-4 py-5 flex flex-col">
+      <div className="flex gap-2 h-10">
         {searchInput.length ? (
           <button
             className="bg-white rounded-full p-2 justify-center items-center shadow"
