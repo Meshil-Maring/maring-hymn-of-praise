@@ -16,6 +16,7 @@ const Search = ({ searchClickHandler }: any) => {
 
   // --- Fetch index data only once ---
   useEffect(() => {
+    console.log(setSearchHistory);
     fetch("/index.json")
       .then((res) => res.json())
       .then((data) => setIndexData(data))
