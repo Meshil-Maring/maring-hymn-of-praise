@@ -30,7 +30,7 @@ const ListView = ({ listType }: { listType: string }) => {
   const checkBookmark = (id: string) => bookmarkList.includes(id);
 
   return (
-    <div className="bg-white relative z-10 w-full py-4 mt-2 rounded-t-2xl h-full overflow-y-auto scrollbar-hidden shadow-sm">
+    <div className="flex-grow bg-white relative z-10 py-4 mt-2 rounded-t-2xl h-full overflow-y-auto scrollbar-hidden shadow-sm">
       {sortedData.map((ele, index) => (
         <ListItem
           key={ele.id}
