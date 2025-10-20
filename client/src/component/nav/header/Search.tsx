@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, use } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import CloseIcon from "../../../assets/icons/close";
 import ChangeToAIcon from "../../../assets/icons/changeToA";
@@ -54,26 +54,40 @@ const Search = ({ searchClickHandler }: any) => {
     setSearchFound([]);
   }
 
-  //  search result render
+  // search result render
   const searchResult = () => {
     return !searchHistory ? (
-      <ul className="mt-4 flex flex-col justify-between items-center gap-2">
-        {searchFound?.map((items, key) => (
-          <>
-            <a className="flex w-full gap-3 items-center ">
-              <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full flex-shrink-0 text-md font-bold">
-                {items.id}
-              </p>
+      <ul className="mt-4 flex flex-col justify-between items-center gap-2 overflow-y-auto">
+        {searchFound?.map((items, index) => {
+          const regex = new RegExp(`(${searchInput})`, "gi");
 
-              <p>{items.title}</p>
+          // Replace matched text with a span for highlight
+          const highlightedTitle = items.title.replace(
+            regex,
+            '<span class="bg-yellow-200 text-black font-semibold">$1</span>'
+          );
 
-              <span className="ml-auto">
-                <HistoryIcon />
-              </span>
-            </a>
-            <hr className="w-[80%] border-gray-300"></hr>
-          </>
-        ))}
+          return (
+            <li
+              className="w-full flex flex-col  gap-2 justify-center items-center"
+              key={index}
+            >
+              <a key={index} className="flex w-full gap-3">
+                <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full flex-shrink-0 text-md font-bold">
+                  {items.id}
+                </p>
+
+                {/* Render with HTML highlight safely */}
+                <p dangerouslySetInnerHTML={{ __html: highlightedTitle }}></p>
+
+                <span className="ml-auto">
+                  <HistoryIcon />
+                </span>
+              </a>
+              <hr className="w-[80%] border-gray-300"></hr>
+            </li>
+          );
+        })}
       </ul>
     ) : (
       <p className="mt-8 flex flex-col justify-between items-center gap-2"></p>
@@ -81,7 +95,7 @@ const Search = ({ searchClickHandler }: any) => {
   };
 
   return (
-    <div className="absolute h-full w-full bg-bg-light z-20 top-0 right-0 px-6 py-5">
+    <div className="absolute h-full w-full bg-bg-light z-20 top-0 right-0 px-4 py-5">
       <div className="flex flex-grow gap-2 h-10">
         {searchInput.length ? (
           <button
