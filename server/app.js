@@ -16,15 +16,7 @@ app.use("/", mainRoutes);
 // MongoDB connection
 mongoose
   .connect(
-<<<<<<< HEAD
-    "mongodb+srv://dsmeshilmaring13_db_user:7G4IAenOiglH0csG@cluster0.hgdnbwo.mongodb.net/test",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-=======
     "mongodb+srv://dsmeshilmaring13_db_user:7G4IAenOiglH0csG@cluster0.hgdnbwo.mongodb.net/myDatabase?retryWrites=true&w=majority"
->>>>>>> 1bfaddce134d21d9a8af6e0ff8dc066457742dd8
   )
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));

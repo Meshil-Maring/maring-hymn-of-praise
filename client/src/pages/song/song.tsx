@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-const Song = () => <div>Hello</div>;
-=======
 import { seEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -26,6 +23,5 @@ const Song = () => {
     </div>
   );
 };
->>>>>>> 1bfaddce134d21d9a8af6e0ff8dc066457742dd8
 
 export default Song;
