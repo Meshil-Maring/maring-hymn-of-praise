@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import PlayIcon from "../../assets/icons/play";
 
 interface Song {
@@ -14,14 +15,29 @@ interface SongLyricsProps {
 }
 
 const SongLyrics = ({ song }: SongLyricsProps) => {
+  const { id } = useParams<{ id: string }>();
+  const songId = Number(id);
+
+  if (!song || !songId || songId > song.length) {
+    return <p className="text-center mt-8">Song not found.</p>;
+  }
+
+  const currentSong = song[songId - 1];
+
   return (
     <div className="mt-8 mx-4 h-full">
       <div className="flex gap-2 items-center">
         <PlayIcon fill="black" size={18} />
-        <p className="font-bold"></p>
+        <p className="font-bold">{currentSong.key}</p>
       </div>
 
-      <ol className="mt-12"></ol>
+      <ol className="mt-12">
+        {currentSong.verse.map((line, index) => (
+          <li key={index} className="mb-4">
+            {line}
+          </li>
+        ))}
+      </ol>
     </div>
   );
 };
