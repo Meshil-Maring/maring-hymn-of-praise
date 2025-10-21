@@ -37,15 +37,15 @@ const Category = ({ activeHandler }: CategoryProps) => {
   // Rendring the data
   // Rendering Order Fomate
   const RenderingOrderFormate = () => (
-    <div className="flex gap-2 p-2">
+    <div className="flex gap-2 p-2 items-center">
       {Object.values(list).map((item) => (
         <button
           key={item}
           onClick={() => clickHandler(item)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+          className={`px-4 py-2 text-[12px]  rounded-full text-md font-medium transition-all duration-300 h-9 ${
             active === item
-              ? "bg-active text-white shadow-md"
-              : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+              ? "bg-active text-white shadow"
+              : "bg-gray-200 text-gray-600 hover:bg-gray-300 shadow-"
           }`}
         >
           {item}
@@ -54,7 +54,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
 
       <button
         onClick={TopicalIndexHandler}
-        className="bg-gray-200 rounded-full h-full px-4 py-2"
+        className="bg-gray-200 text-[12px] rounded-full h-9 px-4 py-2 text-nowrap"
       >
         Topical Index
       </button>
@@ -63,18 +63,21 @@ const Category = ({ activeHandler }: CategoryProps) => {
 
   // Rendering Topical Index
   const RenderingTopicalIndex = () => (
-    <div className="flex bg-alpha m-1 w-full justify-start gap-2 rounded-full shadow-inner">
+    <div className="flex bg-alpha py-1 m-1 w-full justify-start gap-2 rounded-full shadow-inner text-[12px]">
       <button
         onClick={TopicalIndexHandler}
-        className="bg-active text-white rounded-full py-2 px-4 flex-nowrap whitespace-nowrap"
+        className="bg-active text-white rounded-full py-1 px-4 flex-nowrap whitespace-nowrap"
       >
         Topical Index
       </button>
 
       <div className="w-full max-w-full overflow-x-auto scrollbar-hidden rounded-r-full">
-        <ul className="flex gap-2 min-w-max p-2">
+        <ul className="flex gap-2 min-w-max p-2 cursor-pointer">
           {topicalData?.map((item, key: number) => (
-            <li className="px-2 bg-gray-200 rounded-full py-1" key={key}>
+            <li
+              className="px-2 bg-gray-200 rounded-full py-1 text-[12px]"
+              key={key}
+            >
               {item.category}
             </li>
           ))}
@@ -84,7 +87,7 @@ const Category = ({ activeHandler }: CategoryProps) => {
   );
 
   return (
-    <div className="flex gap-4 p-2 bg-white shadow-sm z-10 relative">
+    <div className="flex gap-4 bg-white shadow-sm z-10 relative overflow-x-auto scrollbar-hidden h-18">
       {topicalActive ? <RenderingOrderFormate /> : <RenderingTopicalIndex />}
     </div>
   );

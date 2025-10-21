@@ -29,7 +29,7 @@ const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
         <label className="bg-yellow py-1 rounded-r-md w-10 text-center">
           {id}
         </label>
-        <p className="">{title}</p>
+        <p className="text-start">{title}</p>
       </button>
 
       <button onClick={bookmarkHandler}>
