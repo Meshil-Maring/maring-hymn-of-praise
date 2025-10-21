@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home/Home";
-import Song from "../pages/song/song";
+import Song from "../pages/song/Song";
 
 export const SongContext = createContext(null);
 
