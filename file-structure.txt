@@ -1,0 +1,101 @@
+=========================
+Font-end folder
+=========================
+
+my-app/
+├─ public/
+│   ├─ index.html
+│   ├─ favicon.ico
+│   └─ assets/         # Static images, fonts, icons
+├─ src/
+|   ├─constants
+|   |   ├─ color.ts
+|   |   └─ config.js
+│   ├─ api/            # API calls / services
+│   │   ├─ axios.js
+│   │   └─ authApi.js
+│   ├─ assets/         # Images, icons, fonts used in components
+│   ├─ components/     # Reusable UI components
+│   │   ├─ Button/
+│   │   │   ├─ Button.jsx
+│   │   │   └─ Button.css
+│   │   └─ Modal/
+│   ├─ constants/      # App constants like routes, theme, enums
+│   │   └─ routes.js
+│   ├─ context/        # React Contexts / Providers
+│   │   └─ AuthContext.jsx
+│   ├─ hooks/          # Custom React hooks
+│   │   └─ useAuth.js
+│   ├─ pages/          # Each page (route) as a folder
+│   │   ├─ Home/
+│   │   │   ├─ Home.jsx
+│   │   │   └─ Home.css
+│   │   └─ Dashboard/
+│   │       ├─ Dashboard.jsx
+│   │       └─ Dashboard.css
+│   ├─ routes/         # Routing setup
+│   │   └─ AppRoutes.jsx
+│   ├─ store/          # State management (Redux, Zustand, etc.)
+│   │   ├─ slices/
+│   │   └─ store.js
+│   ├─ styles/         # Global styles (CSS, SCSS)
+│   │   ├─ globals.css
+│   │   └─ variables.css
+│   ├─ utils/          # Utility functions/helpers
+│   │   └─ formatDate.js
+│   ├─ App.jsx
+│   ├─ index.jsx
+│   └─ reportWebVitals.js
+├─ .env                # Environment variables
+├─ package.json
+├─ tailwind.config.js  # If using TailwindCSS
+├─ postcss.config.js
+└─ vite.config.js      # or webpack.config.js
+
+=========================
+Back-end
+=========================
+
+todolist-app/
+│
+├── src/ # Main source code
+│ ├── config/ # Configuration files
+│ │ ├── db.js # Database connection
+│ │ └── env.js # Environment variables loader
+│ │
+│ ├── controllers/ # Request handlers
+│ │ └── userController.js
+│ │
+│ ├── models/ # Mongoose or database models
+│ │ └── userModel.js
+│ │
+│ ├── routes/ # API routes
+│ │ └── userRoutes.js
+│ │
+│ ├── middlewares/ # Custom middlewares
+│ │ ├── authMiddleware.js
+│ │ └── errorMiddleware.js
+│ │
+│ ├── utils/ # Helper functions
+│ │ └── logger.js
+│ │
+│ ├── services/ # Business logic layer
+│ │ └── userService.js
+│ │
+│ ├── templates/ # Business logic layer
+│ │ └── reset-password.js
+│ │
+│ ├── validations/ # Joi/Yup/Zod validations
+│ │ └── userValidation.js
+│ │
+│ ├── app.js # Express app setup
+│ └── server.js # Server entry point
+│
+├── tests/ # Unit & integration tests
+│ └── user.test.js
+│
+├── server.jsS
+├── .env # Environment variables
+├── .gitignore
+├── package.json
+└── README.md
