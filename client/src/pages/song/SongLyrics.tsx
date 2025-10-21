@@ -25,7 +25,7 @@ const SongLyrics = ({ song }: SongLyricsProps) => {
   const currentSong = song[songId - 1];
 
   return (
-    <div className="mt-8 mx-4 h-full">
+    <div className="mt-8 mx-4 flex-grow">
       <div className="flex gap-2 items-center">
         <PlayIcon fill="black" size={18} />
         <p className="font-bold">{currentSong.key}</p>
