@@ -1,21 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import RightIcon from "../../assets/icons/right";
 import LeftIcon from "../../assets/icons/left";
 
 const PageNavigate = () => {
-  const [index, setIndex] = useState<number>(1);
+  const [index, setIndex] = useState<number>();
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIndex(Number(id));
+  }, [id]);
 
   //   Handling next and previous button
   const clickHandler = (value: string) => {
+    if (index === undefined || "") return;
+
     if (value === "next" && index < 461) {
       setIndex(index + 1);
+      navigate(`/song/${index + 1}`);
     } else if (value === "prev" && index > 1) {
       setIndex(index - 1);
+      navigate(`/song/${index - 1}`);
     }
   };
 
   return (
-    <div className="flex gap-6 mx-auto items-center mb-2">
+    <div className="flex gap-6 mx-auto items-center mb-2 mt-auto">
       <button
         onClick={() => clickHandler("prev")}
         className="bg-yellow p-2 rounded-full"
@@ -31,7 +42,7 @@ const PageNavigate = () => {
               : "bg-bg-light text-blue-300"
           }  px-4  py-1 text-center rounded-l-lg`}
         >
-          {index - 1}
+          {index && index - 1}
         </p>
 
         <p className="bg-active text-white flex w-10 h-10 justify-center items-center rounded-lg text-xl font-medium">
@@ -45,7 +56,7 @@ const PageNavigate = () => {
               : "bg-bg-light text-blue-300"
           }  px-4  py-1 text-center rounded-r-lg`}
         >
-          {index + 1}
+          {index && index + 1}
         </p>
       </div>
 
