@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Navigation from "./Navigation";
@@ -24,11 +24,11 @@ const Song = () => {
 
   return (
     <SongContext.Consumer>
-      {(value) => (
+      {() => (
         <div className="flex flex-col h-[100vh]">
           <Navigation />
           <TypeSelect />
-          <SongLyrics data={value} />
+          <SongLyrics song={[]} />
           <PageNavigate />
         </div>
       )}

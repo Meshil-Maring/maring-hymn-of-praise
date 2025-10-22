@@ -20,6 +20,9 @@ const Search = ({ searchClickHandler }: any) => {
       .then((res) => res.json())
       .then((data) => setIndexData(data))
       .catch((err) => console.error(err));
+
+    // TODO: Fix this real search history
+    setSearchHistory("1");
   }, []);
 
   // --- Focus input when input type changes ---
