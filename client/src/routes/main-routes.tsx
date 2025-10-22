@@ -2,16 +2,16 @@
 import { useState, useEffect, createContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home/Home";
-import Song from "../pages/song/Song";
+import Song from "../pages/song/song";
 
-// 1️⃣ Define context type
+// Define context type
 interface SongContextType {
   songs: any[]; // You can replace `any` with your song type
   loading: boolean;
   error: Error | null;
 }
 
-// 2️⃣ Create context with type
+// Create context with type
 export const SongContext = createContext<SongContextType | null>(null);
 
 function MainRoutes() {

@@ -22,6 +22,7 @@ const Search = ({ searchClickHandler }: any) => {
       .catch((err) => console.error(err));
 
     // TODO: Fix this real search history
+    if (1 == 1) return;
     setSearchHistory("1");
   }, []);
 
