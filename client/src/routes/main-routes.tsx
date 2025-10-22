@@ -2,7 +2,7 @@
 import { useState, useEffect, createContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home/Home";
-import Song from "../pages/song/Song";
+import Song from "../pages/song/song";
 
 // 1️⃣ Define context type
 interface SongContextType {
