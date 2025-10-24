@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import StarIcon from "../../assets/icons/star";
 import { COLORS } from "../../constants/color";
 
