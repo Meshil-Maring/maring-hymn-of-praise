@@ -12,8 +12,7 @@ interface SongData {
   id: number;
   title: string;
   key: string;
-  verse: string[];
-  chorus: boolean;
+  sections: string[];
 }
 
 const Song = () => {
@@ -23,7 +22,7 @@ const Song = () => {
   const songId = Number(id);
 
   useEffect(() => {
-    let lastId = 1;
+    let lastId = 0;
 
     if (!songData || lastId != songId) {
       lastId = songId;
@@ -55,10 +54,15 @@ const Song = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen ">
       <Navigation id={songId} title={songData.title} />
       <TypeSelect />
-      <SongLyrics song={{ key: songData.key, verse: songData.verse }} />
+      <SongLyrics
+        song={{
+          key: songData.key,
+          sections: songData.sections,
+        }}
+      />
       <PageNavigate />
     </div>
   );

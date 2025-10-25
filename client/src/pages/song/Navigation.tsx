@@ -9,12 +9,12 @@ const Navigation = ({ id, title }: any) => {
 
   const navigateHomeHandler = () => navigate("/");
   return (
-    <nav className="flex w-full justify-between p-4 bg-amber-50">
+    <nav className="flex w-full justify-between p-4 bg-amber-50 ">
       <button onClick={navigateHomeHandler}>
         <BackIcon fill="black" />
       </button>
 
-      <div className="flex gap-1 font-bold">
+      <div className="flex gap-1 font-bold text-center mx-4">
         <p>{id}.</p>
         <h1>{title}</h1>
       </div>

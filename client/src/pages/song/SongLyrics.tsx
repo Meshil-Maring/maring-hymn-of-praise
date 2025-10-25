@@ -1,32 +1,66 @@
 import PlayIcon from "../../assets/icons/play";
 
-interface SongLyricsProps {
-  song: {
-    key: string;
-    verse: string[];
-  } | null;
+interface Section {
+  type: "verse" | "chorus";
+  lines: string[];
 }
 
-const SongLyrics = ({ song }: SongLyricsProps) => {
+interface Song {
+  key: string;
+  sections: Section[];
+}
+
+interface SongLyricsProps {
+  song: Song | null;
+}
+
+//  Display sections with proper types
+const displayLine = (sections: Section[]) => {
+  let verseCount = 0;
+
+  return sections.map((section, index) => {
+    if (section.type === "verse") {
+      verseCount += 1;
+
+      return (
+        <div key={index} className="flex gap-2 mb-4">
+          <span className="font-bold">{verseCount}.</span>
+          <div>
+            {section.lines.map((line, i) => (
+              <p key={i}>{line}</p>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Chorus section
+    return (
+      <div key={index} className="mb-4 ml-8">
+        {section.lines.map((line, i) => (
+          <p key={i} className="font-bold">
+            {line}
+          </p>
+        ))}
+      </div>
+    );
+  });
+};
+
+const SongLyrics: React.FC<SongLyricsProps> = ({ song }) => {
   if (!song) {
-    return <p className="text-center mt-8">Song not found.</p>;
+    return <p className="text-center mt-5">Song not found.</p>;
   }
 
   return (
-    <div className="mt-8 mx-4 flex-grow">
+    <div className="mt-2 mx-4 flex flex-col min-h-0">
       <div className="flex gap-2 items-center">
         <PlayIcon fill="black" size={18} />
         <p className="font-bold">Key: {song.key}</p>
       </div>
 
-      <ol className="mt-12">
-        {song.verse.map((verse, index) => (
-          <li key={index} className="mb-4 block">
-            {verse.map((line, i) => (
-              <p key={i}>{line}</p>
-            ))}
-          </li>
-        ))}
+      <ol className="mt-6 flex-1 overflow-y-auto flex flex-col mb-4 scrollbar-hidden">
+        {displayLine(song.sections)}
       </ol>
     </div>
   );
