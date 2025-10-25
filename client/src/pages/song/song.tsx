@@ -55,7 +55,7 @@ const Song = () => {
   }
 
   return (
-    <div className="flex flex-col h-[100vh]">
+    <div className="flex flex-col h-screen">
       <Navigation id={songId} title={songData.title} />
       <TypeSelect />
       <SongLyrics song={{ key: songData.key, verse: songData.verse }} />
