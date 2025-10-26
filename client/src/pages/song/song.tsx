@@ -12,7 +12,7 @@ interface SongData {
   id: number;
   title: string;
   key: string;
-  sections: string[];
+  sections: any;
 }
 
 const Song = () => {
