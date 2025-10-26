@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 import CloseIcon from "../../../assets/icons/close";
 import ChangeToAIcon from "../../../assets/icons/changeToA";
@@ -13,6 +14,7 @@ const Search = ({ searchClickHandler }: any) => {
     []
   );
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   // --- Fetch index data only once ---
   useEffect(() => {
@@ -30,6 +32,11 @@ const Search = ({ searchClickHandler }: any) => {
   useEffect(() => {
     inputRef.current?.focus();
   }, [inputType]);
+
+  // --- Handling navigate to song page ---
+  const navigateSong = (id: string | number) => {
+    navigate(`/song/${id}`);
+  };
 
   // --- Debounced search input ---
   const [debouncedInput, setDebouncedInput] = useState(searchInput);
@@ -93,8 +100,11 @@ const Search = ({ searchClickHandler }: any) => {
             className="w-full flex flex-col gap-2 justify-center items-center"
             key={index}
           >
-            <a className="flex w-full gap-3 items-center">
-              <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full flex-shrink-0 text-md font-bold">
+            <button
+              onClick={() => navigateSong(items.id)}
+              className="flex w-full gap-3 items-center"
+            >
+              <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full shrink-0 text-md font-bold">
                 {items.id}
               </p>
               <p
@@ -105,7 +115,7 @@ const Search = ({ searchClickHandler }: any) => {
               <span className="ml-auto">
                 <SearchIcon />
               </span>
-            </a>
+            </button>
             <hr className="w-[80%] border-gray-300" />
           </li>
         ))}
@@ -116,7 +126,7 @@ const Search = ({ searchClickHandler }: any) => {
   };
 
   return (
-    <div className="absolute h-[100vh] w-full bg-bg-light z-20 top-0 right-0 px-4 py-5 flex flex-col">
+    <div className="absolute h-screen w-full bg-bg-light z-20 top-0 right-0 px-4 py-5 flex flex-col">
       <div className="flex gap-2 h-10">
         {searchInput.length ? (
           <button
