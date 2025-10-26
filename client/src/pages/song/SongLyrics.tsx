@@ -1,42 +1,66 @@
-import { useParams } from "react-router-dom";
 import PlayIcon from "../../assets/icons/play";
 
+interface Section {
+  type: "verse" | "chorus";
+  lines: string[];
+}
+
 interface Song {
-  id: number;
-  title: string;
   key: string;
-  verse: string[];
-  image?: string;
-  chorus?: boolean;
+  sections: Section[];
 }
 
 interface SongLyricsProps {
-  song: Song[];
+  song: Song | null;
 }
 
-const SongLyrics = ({ song }: SongLyricsProps) => {
-  const { id } = useParams<{ id: string }>();
-  const songId = Number(id);
+//  Display sections with proper types
+const displayLine = (sections: Section[]) => {
+  let verseCount = 0;
 
-  if (!song || !songId || songId > song.length) {
-    return <p className="text-center mt-8">Song not found.</p>;
+  return sections.map((section, index) => {
+    if (section.type === "verse") {
+      verseCount += 1;
+
+      return (
+        <div key={index} className="flex gap-2 mb-4">
+          <span className="font-bold">{verseCount}.</span>
+          <div>
+            {section.lines.map((line, i) => (
+              <p key={i}>{line}</p>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Chorus section
+    return (
+      <div key={index} className="mb-4 ml-8">
+        {section.lines.map((line, i) => (
+          <p key={i} className="font-bold">
+            {line}
+          </p>
+        ))}
+      </div>
+    );
+  });
+};
+
+const SongLyrics: React.FC<SongLyricsProps> = ({ song }) => {
+  if (!song) {
+    return <p className="text-center mt-5">Song not found.</p>;
   }
 
-  const currentSong = song[songId - 1];
-
   return (
-    <div className="mt-8 mx-4 flex-grow">
+    <div className="mt-2 mx-4 flex flex-col min-h-0">
       <div className="flex gap-2 items-center">
         <PlayIcon fill="black" size={18} />
-        <p className="font-bold">{currentSong.key}</p>
+        <p className="font-bold">Key: {song.key}</p>
       </div>
 
-      <ol className="mt-12">
-        {currentSong.verse.map((line, index) => (
-          <li key={index} className="mb-4">
-            {line}
-          </li>
-        ))}
+      <ol className="mt-6 flex-1 overflow-y-auto flex flex-col mb-4 scrollbar-hidden">
+        {displayLine(song.sections)}
       </ol>
     </div>
   );
