@@ -27,10 +27,7 @@ const Song = () => {
     if (!songData || lastId != songId) {
       lastId = songId;
 
-      fetch(
-        `http://localhost:8000/song/${songId}` ||
-          `https://maring-hymn-of-praise.onrender.com/${songId}`
-      )
+      fetch(`https://maring-hymn-of-praise.onrender.com/${songId}`)
         .then((res) => res.json())
         .then((data) => setSongData(data))
         .catch(console.error);
