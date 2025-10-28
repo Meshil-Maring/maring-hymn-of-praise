@@ -1,7 +1,40 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite"; // ✅ correct for v4
+import tailwindcss from "@tailwindcss/vite";
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    VitePWA({
+      registerType: "autoUpdate", // automatically updates the service worker
+      includeAssets: ["favicon.svg", "robots.txt", "apple-touch-icon.png"],
+      manifest: {
+        name: "Maring Hymn of Praise",
+        short_name: "Maring Hymn",
+        description:
+          "Maring Hymn of Praise is a Progressive Web App designed to make accessing Maring Christian hymns easy and convenient. It allows users to read, search, and sing hymns directly from their devices — even without an internet connection. With a clean, user-friendly interface and offline support, it helps preserve and share the Maring community’s spiritual songs in a modern digital form.",
+        theme_color: "#ffffff",
+        icons: [
+          {
+            src: "dml-192x192.jpg",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "dml-512x512.jpg",
+            sizes: "512x512",
+            type: "image/png",
+          },
+          {
+            src: "dml-512x512.jpg",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable",
+          },
+        ],
+      },
+    }),
+  ],
 });
