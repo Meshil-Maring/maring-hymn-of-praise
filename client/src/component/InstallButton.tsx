@@ -38,6 +38,10 @@ const InstallButton: React.FC = () => {
       console.log("User dismissed the install");
     }
 
+    fetch("/index.json")
+      .then((res) => res.json())
+      .then((data) => localStorage.setItem("index", JSON.stringify(data)));
+
     setPromptEvent(null);
   };
 

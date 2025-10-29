@@ -46,7 +46,6 @@ const SongMain = () => {
     return () => window.removeEventListener("popstate", backHandler);
   }, [navigate]);
 
-  // Guard against null before rendering
   if (!songData) {
     return (
       <div className="flex items-center justify-center h-screen">

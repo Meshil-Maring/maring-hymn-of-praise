@@ -37,6 +37,36 @@ export default defineConfig({
           },
         ],
       },
+
+      workbox: {
+        navigateFallback: "/index.html",
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith("/song/"),
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "songs-cache",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+              },
+            },
+          },
+          {
+            urlPattern:
+              /^https:\/\/maring-hymn-of-praise\.onrender\.com\/song\//,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "song-api-cache",
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 7 * 24 * 60 * 60,
+              },
+            },
+          },
+        ],
+      },
     }),
   ],
 });
