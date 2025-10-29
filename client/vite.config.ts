@@ -10,7 +10,7 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate", // automatically updates the service worker
       outDir: "dist",
-      filename: "sw.js",
+      filename: "service-worker.js",
       includeAssets: ["favicon.svg", "robots.txt", "apple-touch-icon.png"],
       manifest: {
         name: "Maring Hymn of Praise",
