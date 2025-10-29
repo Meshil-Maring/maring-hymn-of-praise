@@ -65,6 +65,11 @@ const InstallButton: React.FC = () => {
           localStorage.setItem("index", JSON.stringify(data));
           console.log("Index data saved to localStorage");
         });
+
+      // Save latest all the song data
+      fetch("https://maring-hymn-of-praise.onrender.com/")
+        .then((res) => res.json())
+        .then((data) => localStorage.setItem("songData", JSON.stringify(data)));
     } else {
       console.log("User dismissed the install");
     }

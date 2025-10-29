@@ -27,12 +27,17 @@ const SongMain = () => {
     if (!songData || lastId != songId) {
       lastId = songId;
 
-      console.log("Hello what happen");
+      if (localStorage.getItem("songData")) {
+        fetch(`https://maring-hymn-of-praise.onrender.com/song/${songId}`)
+          .then((res) => res.json())
+          .then((data) => setSongData(data))
+          .catch(console.error);
+      } else {
+        const res = JSON.parse(localStorage.getItem("songData")!);
 
-      fetch(`https://maring-hymn-of-praise.onrender.com/song/${songId}`)
-        .then((res) => res.json())
-        .then((data) => setSongData(data))
-        .catch(console.error);
+        const data = res.find((items: any) => items.id === songId);
+        setSongData(data);
+      }
     }
   }, [songId]);
 
