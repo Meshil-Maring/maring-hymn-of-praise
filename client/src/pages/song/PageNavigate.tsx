@@ -29,7 +29,11 @@ const PageNavigate = () => {
     <div className="flex gap-6 mx-auto items-center mb-2 mt-auto">
       <button
         onClick={() => clickHandler("prev")}
-        className="bg-yellow p-2 rounded-full"
+        className={`${
+          index == 1
+            ? "bg-transparent text-transparent"
+            : "bg-yellow text-black"
+        }  rounded-full p-2`}
       >
         <LeftIcon />
       </button>
@@ -40,12 +44,12 @@ const PageNavigate = () => {
             index == 1
               ? "bg-transparent text-transparent"
               : "bg-bg-light text-blue-300"
-          }  px-4  py-1 text-center rounded-l-lg`}
+          }  px-3  py-1 text-center rounded-l-lg`}
         >
           {index && index - 1}
         </p>
 
-        <p className="bg-active text-white flex w-10 h-10 justify-center items-center rounded-lg text-xl font-medium">
+        <p className="bg-active text-white flex w-10 h-10 justify-center items-center rounded-lg text-lg font-medium">
           {index}
         </p>
 
@@ -54,7 +58,7 @@ const PageNavigate = () => {
             index == 461
               ? "bg-transparent text-transparent"
               : "bg-bg-light text-blue-300"
-          }  px-4  py-1 text-center rounded-r-lg`}
+          }  px-3  py-1 text-center rounded-r-lg`}
         >
           {index && index + 1}
         </p>
@@ -62,7 +66,11 @@ const PageNavigate = () => {
 
       <button
         onClick={() => clickHandler("next")}
-        className="bg-yellow p-2 rounded-full"
+        className={`${
+          index == 461
+            ? "bg-transprent text-transparent"
+            : "bg-yellow text-black"
+        }  rounded-full p-2`}
       >
         <RightIcon size={24} />
       </button>
