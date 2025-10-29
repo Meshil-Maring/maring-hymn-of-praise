@@ -4,7 +4,6 @@ import Header from "../../component/nav/header/Header";
 import Category from "./Category";
 import ListView from "./ListView";
 import InstallPWA from "../../component/InstallButton";
-import Button from "../../component/Button";
 
 const Home = () => {
   const [listType, setListType] = useState<string>("Numerical");
@@ -15,7 +14,6 @@ const Home = () => {
 
   return (
     <div className="bg-bg-light h-screen flex flex-col relative">
-      <Button />
       <Header />
       <InstallPWA />
       <Category activeHandler={activeHandler} />

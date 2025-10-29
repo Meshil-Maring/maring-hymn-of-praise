@@ -15,7 +15,7 @@ interface SongData {
   sections: any;
 }
 
-const Song = () => {
+const SongMain = () => {
   const [songData, setSongData] = useState<SongData | null>(null);
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
@@ -46,7 +46,6 @@ const Song = () => {
     return () => window.removeEventListener("popstate", backHandler);
   }, [navigate]);
 
-  // Guard against null before rendering
   if (!songData) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -70,4 +69,4 @@ const Song = () => {
   );
 };
 
-export default Song;
+export default SongMain;

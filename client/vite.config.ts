@@ -9,6 +9,8 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate", // automatically updates the service worker
+      outDir: "dist",
+      filename: "sw.js",
       includeAssets: ["favicon.svg", "robots.txt", "apple-touch-icon.png"],
       manifest: {
         name: "Maring Hymn of Praise",
@@ -32,6 +34,36 @@ export default defineConfig({
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable",
+          },
+        ],
+      },
+
+      workbox: {
+        navigateFallback: "/index.html",
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith("/song/"),
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "songs-cache",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+              },
+            },
+          },
+          {
+            urlPattern:
+              /^https:\/\/maring-hymn-of-praise\.onrender\.com\/song\//,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "song-api-cache",
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 7 * 24 * 60 * 60,
+              },
+            },
           },
         ],
       },

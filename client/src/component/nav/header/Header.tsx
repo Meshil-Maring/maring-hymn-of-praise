@@ -19,7 +19,7 @@ const Header = () => {
       <header className="flex h-18 items-center justify-between px-2 ">
         <MenuIcon fill={COLORS.primary} stroke={COLORS.primary} size={24} />
         {!searchActive ? (
-          <div className="flex flex-grow justify-between items-center mr-2">
+          <div className="flex grow justify-between items-center mr-2">
             <h1 className="text-md font-bold text-center w-full">
               DUNPUYA MATHANGNA LAA
             </h1>
