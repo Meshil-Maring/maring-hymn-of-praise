@@ -1,13 +1,12 @@
 // src/registerSW.js
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then((reg) => {
-        console.log("✅ Service Worker registered:", reg);
-      })
-      .catch((err) => {
-        console.log("❌ SW registration failed:", err);
-      });
-  });
-}
+import { registerSW } from "virtual:pwa-register";
+
+const updateSW = registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    updateSW(true); // Force activate new SW immediately
+  },
+  onOfflineReady() {
+    console.log("App is ready to work offline!");
+  },
+});
