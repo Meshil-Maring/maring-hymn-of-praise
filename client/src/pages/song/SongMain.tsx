@@ -62,7 +62,6 @@ const SongMain = () => {
   return (
     <div className="flex flex-col h-screen ">
       <Navigation id={songId} title={songData.title} />
-      <p>Hello I am for testing.</p>
       <TypeSelect />
       <SongLyrics
         song={{
