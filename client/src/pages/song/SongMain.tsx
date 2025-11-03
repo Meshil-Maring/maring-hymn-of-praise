@@ -33,7 +33,9 @@ const SongMain = () => {
         const data = res.find((items: any) => items.id === songId);
         setSongData(data);
       } else {
-        fetch(`https://maring-hymn-of-praise.onrender.com/song/${songId}`)
+        fetch(
+          `https://maring-hymn-of-praise-server.onrender.com/song/${songId}`
+        )
           .then((res) => res.json())
           .then((data) => setSongData(data))
           .catch(console.error);
@@ -61,7 +63,6 @@ const SongMain = () => {
 
   return (
     <div className="flex flex-col h-screen ">
-      <h1>Hello</h1>
       <Navigation id={songId} title={songData.title} />
       <TypeSelect />
       <SongLyrics
