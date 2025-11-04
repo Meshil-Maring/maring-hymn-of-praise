@@ -62,7 +62,7 @@ const SongMain = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen ">
+    <div className="flex flex-col h-screen justify-center">
       <Navigation id={songId} title={songData.title} />
       <TypeSelect />
       <SongLyrics
