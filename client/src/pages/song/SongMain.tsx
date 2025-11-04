@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Search from "../../component/nav/header/Search";
+import SearchIcon from "../../assets/icons/search";
 
 import Navigation from "./Navigation";
 import TypeSelect from "./TypeSelect";
@@ -61,6 +63,11 @@ const SongMain = () => {
     );
   }
 
+  // pull down and search
+  // const searchHandler = () => {
+  //   console.log()
+  // }
+
   return (
     <div className="flex flex-col h-screen justify-center">
       <Navigation id={songId} title={songData.title} />
@@ -72,6 +79,8 @@ const SongMain = () => {
         }}
       />
       <PageNavigate />
+
+      <div className="w-full h-1/2 fixed z-20 bottom-0"></div>
     </div>
   );
 };

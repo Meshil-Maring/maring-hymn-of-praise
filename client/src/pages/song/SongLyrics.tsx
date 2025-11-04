@@ -53,7 +53,7 @@ const SongLyrics: React.FC<SongLyricsProps> = ({ song }) => {
   }
 
   return (
-    <div className="mt-2 mx-6 flex flex-col min-h-0">
+    <div className="mt-2 mx-6 mr-8 flex flex-col min-h-0">
       <div className="flex gap-2 items-center">
         <PlayIcon fill="black" size={18} />
         <p className="font-bold">Key: {song.key}</p>
