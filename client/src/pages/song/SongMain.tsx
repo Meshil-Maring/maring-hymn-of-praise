@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Search from "../../component/nav/header/Search";
-import SearchIcon from "../../assets/icons/search";
 
 import Navigation from "./Navigation";
 import TypeSelect from "./TypeSelect";
@@ -22,6 +21,11 @@ const SongMain = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const songId = Number(id);
+
+  // Handle touch
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [touchY, setTouchY] = useState<number | null>(null);
+  const [translatey, setTranslateY] = useState(0);
 
   useEffect(() => {
     let lastId = 0;
@@ -63,11 +67,6 @@ const SongMain = () => {
     );
   }
 
-  // pull down and search
-  // const searchHandler = () => {
-  //   console.log()
-  // }
-
   return (
     <div className="flex flex-col h-screen justify-center">
       <Navigation id={songId} title={songData.title} />
@@ -80,7 +79,7 @@ const SongMain = () => {
       />
       <PageNavigate />
 
-      <div className="w-full h-1/2 fixed z-20 bottom-0"></div>
+      <div className="w-full h-1/4 fixed z-20 top-0"></div>
     </div>
   );
 };
