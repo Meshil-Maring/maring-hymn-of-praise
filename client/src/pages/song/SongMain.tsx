@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Search from "../../component/nav/header/Search";
+import SearchIcon from "../../assets/icons/search";
 
 import Navigation from "./Navigation";
 import TypeSelect from "./TypeSelect";
@@ -25,7 +26,7 @@ const SongMain = () => {
   // Handle touch
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [touchY, setTouchY] = useState<number | null>(null);
-  const [translatey, setTranslateY] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
 
   useEffect(() => {
     let lastId = 0;
@@ -67,6 +68,35 @@ const SongMain = () => {
     );
   }
 
+  // Start touch
+  const startTouch = (e: React.TouchEvent) => {
+    setTouchY(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchY !== null) {
+      const current = e.touches[0].clientX;
+      const diff = current - touchY;
+
+      if (diff > 0 && diff < 200) {
+        setTranslateX(diff);
+      }
+    }
+  };
+
+  const endTouch = () => {
+    if (translateX > 100) {
+      setIsSearching(true);
+    }
+
+    setTranslateX(0);
+    setTouchY(null);
+  };
+
+  function searchClickHandler() {
+    setIsSearching(false);
+  }
+
   return (
     <div className="flex flex-col h-screen justify-center">
       <Navigation id={songId} title={songData.title} />
@@ -79,7 +109,28 @@ const SongMain = () => {
       />
       <PageNavigate />
 
-      <div className="w-full h-1/4 fixed z-20 top-0"></div>
+      <div
+        onTouchStart={startTouch}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={endTouch}
+        className="w-[20%] rounded-r-2xl h-[70%] fixed z-20 bottom-18 left-2"
+      ></div>
+
+      {isSearching && <Search searchClickHandler={searchClickHandler} />}
+
+      <aside
+        style={{
+          transform:
+            translateX < 100
+              ? `translateX(${translateX}px)`
+              : "translateX(100px)",
+        }}
+        className={`fixed rounded-full p-1 -left-10 ${
+          translateX > 100 ? "bg-active" : "bg-active/10"
+        }`}
+      >
+        <SearchIcon size={32} stroke={translateX > 100 ? "white" : "black"} />
+      </aside>
     </div>
   );
 };

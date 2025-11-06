@@ -36,6 +36,7 @@ const Search = ({ searchClickHandler }: any) => {
   // --- Handling navigate to song page ---
   const navigateSong = (id: string | number) => {
     navigate(`/song/${id}`);
+    searchClickHandler();
   };
 
   // --- Debounced search input ---
