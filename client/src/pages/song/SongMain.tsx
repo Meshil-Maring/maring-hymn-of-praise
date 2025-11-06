@@ -7,6 +7,7 @@ import Navigation from "./Navigation";
 import TypeSelect from "./TypeSelect";
 import SongLyrics from "./SongLyrics";
 import PageNavigate from "./PageNavigate";
+import ZoomButton from "../../component/ZoomButton";
 
 // Define the type for your song data
 interface SongData {
@@ -117,6 +118,8 @@ const SongMain = () => {
       ></div>
 
       {isSearching && <Search searchClickHandler={searchClickHandler} />}
+
+      <ZoomButton />
 
       <aside
         style={{

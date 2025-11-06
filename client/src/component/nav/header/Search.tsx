@@ -44,7 +44,7 @@ const Search = ({ searchClickHandler }: any) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedInput(searchInput);
-    }, 200); // 200ms debounce delay
+    }, 200);
     return () => clearTimeout(timer);
   }, [searchInput]);
 
