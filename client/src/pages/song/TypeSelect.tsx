@@ -11,7 +11,7 @@ const TypeSelect = () => {
     <div className="flex rounded-lg mx-auto bg-bg-alpha mt-2 justify-start shadow-inner">
       <button
         className={`${
-          songActive ? "rounded-l-lg bg-active text-white m-[2px]" : ""
+          songActive ? "rounded-l-lg bg-active text-white m-0.5" : ""
         }  px-6 py-1`}
         onClick={() => changeTypeHandler(true)}
       >
@@ -20,7 +20,7 @@ const TypeSelect = () => {
 
       <button
         className={`${
-          songActive ? "" : "rounded-r-lg bg-active text-white m-[2px]"
+          songActive ? "" : "rounded-r-lg bg-active text-white m-0.5"
         } px-6 py-1`}
         onClick={() => changeTypeHandler(false)}
       >
