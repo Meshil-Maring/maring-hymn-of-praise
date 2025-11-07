@@ -9,7 +9,6 @@ import SongLyrics from "./SongLyrics";
 import PageNavigate from "./PageNavigate";
 import ZoomButton from "../../component/ZoomButton";
 
-// Define the type for your song data
 interface SongData {
   _id: string;
   id: number;
@@ -20,96 +19,96 @@ interface SongData {
 
 const SongMain = () => {
   const [songData, setSongData] = useState<SongData | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [touchX, setTouchX] = useState<number | null>(null);
+  const [translateX, setTranslateX] = useState(0);
+  const [fontSize, setFontSize] = useState<number>(() => {
+    const saved = localStorage.getItem("fontSize");
+    return saved ? Number(saved) : 14;
+  });
+
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const songId = Number(id);
 
-  // Handle touch
-  const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [touchY, setTouchY] = useState<number | null>(null);
-  const [translateX, setTranslateX] = useState(0);
-
+  // ✅ Load song data
   useEffect(() => {
-    let lastId = 0;
+    const saved = localStorage.getItem("songData");
 
-    if (!songData || lastId != songId) {
-      lastId = songId;
-
-      if (localStorage.getItem("songData")) {
-        const res = JSON.parse(localStorage.getItem("songData")!);
-
-        const data = res.find((items: any) => items.id === songId);
-        setSongData(data);
-      } else {
-        fetch(
-          `https://maring-hymn-of-praise-server.onrender.com/song/${songId}`
-        )
-          .then((res) => res.json())
-          .then((data) => setSongData(data))
-          .catch(console.error);
+    if (saved) {
+      const allSongs = JSON.parse(saved);
+      const found = allSongs.find((item: any) => item.id === songId);
+      if (found) {
+        setSongData(found);
+        return;
       }
     }
+
+    // If not found in localStorage → fetch from API
+    fetch(`https://maring-hymn-of-praise-server.onrender.com/song/${songId}`)
+      .then((res) => res.json())
+      .then((data) => setSongData(data))
+      .catch(console.error);
   }, [songId]);
 
-  // handle back
+  // ✅ Save font size whenever it changes
   useEffect(() => {
-    const backHandler = (event: PopStateEvent) => {
+    localStorage.setItem("fontSize", String(fontSize));
+  }, [fontSize]);
+
+  // ✅ Back button handling
+  useEffect(() => {
+    const handleBack = (event: PopStateEvent) => {
       event.preventDefault();
       navigate("/");
     };
-    window.addEventListener("popstate", backHandler);
-    return () => window.removeEventListener("popstate", backHandler);
+    window.addEventListener("popstate", handleBack);
+    return () => window.removeEventListener("popstate", handleBack);
   }, [navigate]);
+
+  // ✅ Touch swipe for search
+  const startTouch = (e: React.TouchEvent) => setTouchX(e.touches[0].clientX);
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchX !== null) {
+      const diff = e.touches[0].clientX - touchX;
+      if (diff > 0 && diff < 200) setTranslateX(diff);
+    }
+  };
+
+  const endTouch = () => {
+    if (translateX > 100) setIsSearching(true);
+    setTranslateX(0);
+    setTouchX(null);
+  };
+
+  const handleSearchClose = () => setIsSearching(false);
 
   if (!songData) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen text-lg font-semibold">
         Loading...
       </div>
     );
   }
 
-  // Start touch
-  const startTouch = (e: React.TouchEvent) => {
-    setTouchY(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchY !== null) {
-      const current = e.touches[0].clientX;
-      const diff = current - touchY;
-
-      if (diff > 0 && diff < 200) {
-        setTranslateX(diff);
-      }
-    }
-  };
-
-  const endTouch = () => {
-    if (translateX > 100) {
-      setIsSearching(true);
-    }
-
-    setTranslateX(0);
-    setTouchY(null);
-  };
-
-  function searchClickHandler() {
-    setIsSearching(false);
-  }
-
   return (
-    <div className="flex flex-col h-screen justify-center">
+    <div className="flex flex-col h-screen justify-center relative">
       <Navigation id={songId} title={songData.title} />
       <TypeSelect />
+
+      {/* Lyrics */}
       <SongLyrics
+        fontSize={fontSize}
         song={{
           key: songData.key,
           sections: songData.sections,
         }}
       />
+
       <PageNavigate />
 
+      {/* Swipe area */}
       <div
         onTouchStart={startTouch}
         onTouchMove={handleTouchMove}
@@ -117,18 +116,17 @@ const SongMain = () => {
         className="w-[20%] rounded-r-2xl h-[70%] fixed z-20 bottom-18 left-2"
       ></div>
 
-      {isSearching && <Search searchClickHandler={searchClickHandler} />}
+      {isSearching && <Search searchClickHandler={handleSearchClose} />}
 
-      <ZoomButton />
+      {/* Zoom control */}
+      <ZoomButton fontSize={fontSize} onFontSizeChange={setFontSize} />
 
+      {/* Search icon with swipe animation */}
       <aside
         style={{
-          transform:
-            translateX < 100
-              ? `translateX(${translateX}px)`
-              : "translateX(100px)",
+          transform: `translateX(${Math.min(translateX, 100)}px)`,
         }}
-        className={`fixed rounded-full p-1 -left-10 ${
+        className={`fixed rounded-full p-1 -left-10 transition-all duration-200 ${
           translateX > 100 ? "bg-active" : "bg-active/10"
         }`}
       >
