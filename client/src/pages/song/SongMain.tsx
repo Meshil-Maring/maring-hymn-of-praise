@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+// import { useNetworkStatus } from "../../component/UseNetworkStatus.js";
 import Search from "../../component/nav/header/Search";
 import SearchIcon from "../../assets/icons/search";
 
