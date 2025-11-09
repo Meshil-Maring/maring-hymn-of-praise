@@ -31,7 +31,7 @@ const SongMain = () => {
   const { id } = useParams<{ id: string }>();
   const songId = Number(id);
 
-  // ✅ Load song data
+  // Load song data
   useEffect(() => {
     const saved = localStorage.getItem("songData");
 
@@ -51,12 +51,12 @@ const SongMain = () => {
       .catch(console.error);
   }, [songId]);
 
-  // ✅ Save font size whenever it changes
+  // Save font size whenever it changes
   useEffect(() => {
     localStorage.setItem("fontSize", String(fontSize));
   }, [fontSize]);
 
-  // ✅ Back button handling
+  // Back button handling
   useEffect(() => {
     const handleBack = (event: PopStateEvent) => {
       event.preventDefault();
@@ -66,7 +66,7 @@ const SongMain = () => {
     return () => window.removeEventListener("popstate", handleBack);
   }, [navigate]);
 
-  // ✅ Touch swipe for search
+  // Touch swipe for search
   const startTouch = (e: React.TouchEvent) => setTouchX(e.touches[0].clientX);
 
   const handleTouchMove = (e: React.TouchEvent) => {
