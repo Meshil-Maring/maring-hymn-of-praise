@@ -23,7 +23,7 @@ async function generateSitemap() {
 
   // Optional: wait for finish
   await streamToPromise(stream);
-  console.log("✅ Sitemap generated at dist/sitemap.xml");
+  console.log("Sitemap generated at dist/sitemap.xml");
 }
 
 // Run the function
