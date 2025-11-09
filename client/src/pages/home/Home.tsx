@@ -47,12 +47,7 @@ const Home = () => {
       {/* Network Status Banner */}
       {!isOnline && (
         <div className="fixed top-0 left-0 w-full bg-red-500 text-white text-center py-1 text-sm z-50">
-          Offline — using saved data
-        </div>
-      )}
-      {isOnline && (
-        <div className="fixed top-0 left-0 w-full bg-green-600 text-white text-center py-1 text-sm z-50">
-          Online
+          Offline
         </div>
       )}
 

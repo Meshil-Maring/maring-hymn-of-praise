@@ -67,7 +67,7 @@ const InstallButton: React.FC = () => {
         });
 
       // Save latest all the song data
-      fetch("https://maring-hymn-of-praise.onrender.com/")
+      fetch("https://maring-hymn-of-praise-server.onrender.com/")
         .then((res) => res.json())
         .then((data) => localStorage.setItem("songData", JSON.stringify(data)));
     } else {
