@@ -29,6 +29,12 @@ const Home = () => {
     const handleOffline = () => setIsOnline(false);
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
+
+    isOnline &&
+      fetch("https://maring-hymn-of-praise-server.onrender.com/")
+        .then((res) => res.json())
+        .then((data) => localStorage.setItem("songData", JSON.stringify(data)));
+
     return () => {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
@@ -46,7 +52,7 @@ const Home = () => {
 
       {/* Network Status Banner */}
       {!isOnline && (
-        <div className="fixed top-0 left-0 w-full bg-red-500 text-white text-center py-1 text-sm z-50">
+        <div className="fixed bottom-0 left-0 w-full bg-red-500 text-white text-center py-1 text-sm z-50">
           Offline
         </div>
       )}
