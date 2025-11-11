@@ -37,12 +37,12 @@ const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
     >
       <button
         onClick={() => nevigateToSong(id)}
-        className="flex  gap-4 items-center flex-grow"
+        className="flex  gap-4 items-center grow"
       >
         <label className="bg-yellow py-1 rounded-r-md w-10 text-center flex-none">
           {id}
         </label>
-        <p className="text-start flex-grow">{title}</p>
+        <p className="text-start grow">{title}</p>
       </button>
 
       <button onClick={bookmarkHandler}>
