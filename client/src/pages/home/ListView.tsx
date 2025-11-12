@@ -16,9 +16,7 @@ const ListView = ({ listType }: { listType: string }) => {
         .then((res) => res.json())
         .then((data) => setListData(data));
     }
-  }, []);
 
-  useEffect(() => {
     const saveBookmark = localStorage.getItem("bookmarkList");
     if (saveBookmark) setBookmarkList(JSON.parse(saveBookmark));
   }, []);

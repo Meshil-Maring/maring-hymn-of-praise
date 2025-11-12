@@ -1,11 +1,16 @@
-import { useState } from "react";
 import BookmarkIcon from "../../../assets/icons/star";
 
-const BookmarkList = ({ id, title }: { id: string; title: string }) => {
-  const [bookmark, setBookmark] = useState<boolean>(true);
-
+const BookmarkList = ({
+  id,
+  title,
+  cb,
+}: {
+  id: string;
+  title: string;
+  cb: Function;
+}) => {
   const bookmarkHandler = () => {
-    setBookmark(!bookmark);
+    cb(id);
   };
 
   return (
@@ -18,10 +23,7 @@ const BookmarkList = ({ id, title }: { id: string; title: string }) => {
         <p className="text-active">{title}</p>
 
         <button onClick={bookmarkHandler} className="ml-auto">
-          <BookmarkIcon
-            fill={bookmark ? "black" : "transparent"}
-            stroke="black"
-          />
+          <BookmarkIcon fill="black" stroke="black" />
         </button>
       </div>
       <hr className="w-[80%] border-gray-300" />

@@ -10,12 +10,12 @@ type BookmarkItems = {
 
 const Bookmark = ({ bookmark }: any) => {
   const [bookmarkList, setBookmarkList] = useState<BookmarkItems[]>([]);
-  const [index, setIndex] = useState<any[]>([]);
+
+  let arr: string[] | null = null;
 
   useEffect(() => {
     const savedBookmark = localStorage.getItem("bookmarkList");
 
-    let arr: string[] | null = null;
     if (savedBookmark) {
       try {
         arr = JSON.parse(savedBookmark);
@@ -27,8 +27,6 @@ const Bookmark = ({ bookmark }: any) => {
     fetch("/index.json")
       .then((res) => res.json())
       .then((data) => {
-        setIndex(data);
-
         if (arr && Array.isArray(arr)) {
           const found = arr
             .map((value: string) => {
@@ -46,10 +44,27 @@ const Bookmark = ({ bookmark }: any) => {
       });
   }, []);
 
+  // remove bookmark
+  const removeBookmarkHandler = (id: string) => {
+    setBookmarkList((prev) => {
+      const updated = prev.filter((item) => item.id !== id);
+
+      const onlyIds = updated.map((items) => items.id);
+
+      localStorage.setItem("bookmarkList", JSON.stringify(onlyIds));
+      return updated;
+    });
+  };
+
   // Render bookmark
   const renderBookmark = () => {
     return bookmarkList.map((items: BookmarkItems, key) => (
-      <BookmarkList key={key} id={items.id} title={items.title} />
+      <BookmarkList
+        key={key}
+        id={items.id}
+        title={items.title}
+        cb={removeBookmarkHandler}
+      />
     ));
   };
 
