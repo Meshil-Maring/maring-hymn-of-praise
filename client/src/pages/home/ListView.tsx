@@ -10,13 +10,17 @@ const ListView = ({ listType }: { listType: string }) => {
   useEffect(() => {
     if (localStorage.getItem("index")) {
       const index = JSON.parse(localStorage.getItem("index")!);
-
       setListData(index);
     } else {
       fetch("/index.json")
         .then((res) => res.json())
         .then((data) => setListData(data));
     }
+  }, []);
+
+  useEffect(() => {
+    const saveBookmark = localStorage.getItem("bookmarkList");
+    if (saveBookmark) setBookmarkList(JSON.parse(saveBookmark));
   }, []);
 
   // Sorting logic
@@ -27,9 +31,15 @@ const ListView = ({ listType }: { listType: string }) => {
   );
 
   const addBookmarkListHandler = (id: string) => {
-    setBookmarkList((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
+    setBookmarkList((prev) => {
+      const updated = prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id];
+
+      localStorage.setItem("bookmarkList", JSON.stringify(updated));
+
+      return updated;
+    });
   };
 
   const checkBookmark = (id: string) => bookmarkList.includes(id);

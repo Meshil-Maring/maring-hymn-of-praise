@@ -6,7 +6,7 @@ const SearchList = ({ items }) => {
       key={index}
     >
       <div className="flex w-full gap-3 items-center">
-        <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full flex-shrink-0 text-md font-bold">
+        <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full shrink-0 text-md font-bold">
           {items.id}
         </p>
         <p

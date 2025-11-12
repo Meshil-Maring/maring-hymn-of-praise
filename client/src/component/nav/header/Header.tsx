@@ -3,15 +3,21 @@ import { useState } from "react";
 import MenuIcon from "../../../assets/icons/menu";
 import SearchIcon from "../../../assets/icons/search";
 import StarIcon from "../../../assets/icons/star";
-
 import { COLORS } from "../../../constants/color";
+
 import Search from "./Search";
+import Bookmark from "../../../pages/home/Bookmark";
 
 const Header = () => {
   const [searchActive, setSearchActive] = useState<boolean>(false);
+  const [bookmarkActive, setBookmarkActive] = useState<boolean>(false);
 
   const searchClickHandler = () => {
     setSearchActive(!searchActive);
+  };
+
+  const bookmarkHandler = () => {
+    setBookmarkActive(!bookmarkActive);
   };
 
   return (
@@ -32,7 +38,11 @@ const Header = () => {
           <Search searchClickHandler={searchClickHandler} />
         )}
 
-        <StarIcon fill={COLORS.primary} stroke={COLORS.primary} />
+        <button onClick={bookmarkHandler}>
+          <StarIcon fill={COLORS.primary} stroke={COLORS.primary} />
+        </button>
+
+        {bookmarkActive && <Bookmark bookmark={bookmarkHandler} />}
       </header>
     </>
   );
