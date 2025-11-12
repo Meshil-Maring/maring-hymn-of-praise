@@ -6,6 +6,7 @@ import Header from "../../component/nav/header/Header";
 import Category from "./Category";
 import ListView from "./ListView";
 import InstallPWA from "../../component/InstallButton";
+import MessageComp from "../../component/Message";
 
 const Home = () => {
   const [listType, setListType] = useState<string>("Numerical");
@@ -47,6 +48,7 @@ const Home = () => {
 
   return (
     <div className="bg-bg-light h-screen flex flex-col relative">
+      <MessageComp message={"32 has been added to bookmarks"} />
       <Header />
       <InstallPWA />
 
