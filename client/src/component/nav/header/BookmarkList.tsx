@@ -1,8 +1,8 @@
 import { useState } from "react";
 import BookmarkIcon from "../../../assets/icons/star";
 
-const BookmarkList = () => {
-  const [bookmark, setBookmark] = useState<boolean>();
+const BookmarkList = ({ id, title }: { id: string; title: string }) => {
+  const [bookmark, setBookmark] = useState<boolean>(true);
 
   const bookmarkHandler = () => {
     setBookmark(!bookmark);
@@ -12,10 +12,10 @@ const BookmarkList = () => {
     <div className="w-full flex flex-col gap-2 justify-center items-center">
       <div className="flex w-full gap-3 items-center">
         <p className="bg-yellow h-9 w-9 flex justify-center items-center rounded-full shrink-0 text-md font-bold text-black">
-          23
+          {id}
         </p>
 
-        <p className="text-active">Hello</p>
+        <p className="text-active">{title}</p>
 
         <button onClick={bookmarkHandler} className="ml-auto">
           <BookmarkIcon
