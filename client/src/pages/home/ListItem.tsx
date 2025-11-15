@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import StarIcon from "../../assets/icons/star";
 import { COLORS } from "../../constants/color";
 
@@ -7,26 +7,20 @@ type ListItemProps = {
   title: string;
   id: string | number;
   even: boolean;
-  cb: Function;
-  bookmark: boolean;
+  addBookmark: any;
+  removeBookmark: any;
+  isBookmark: any;
 };
 
-const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
+const ListItem = ({
+  title,
+  id,
+  even,
+  addBookmark,
+  removeBookmark,
+  isBookmark,
+}: ListItemProps) => {
   const navigate = useNavigate();
-
-  const [bookmarkValue, setBookmarkValue] = useState(bookmark);
-
-  type BookmarkHandlerProps = () => void;
-
-  const nevigateToSong = (id: string | number) => {
-    navigate(`/song/${id}`);
-  };
-
-  // handling bookmark
-  const bookmarkHandler: BookmarkHandlerProps = () => {
-    setBookmarkValue(!bookmarkValue);
-    cb(id);
-  };
 
   return (
     <li
@@ -36,7 +30,7 @@ const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
       }}
     >
       <button
-        onClick={() => nevigateToSong(id)}
+        onClick={() => navigate(`/song/${id}`)}
         className="flex  gap-4 items-center grow"
       >
         <label className="bg-yellow py-1 rounded-r-md w-10 text-center flex-none">
@@ -45,11 +39,12 @@ const ListItem = ({ title, id, even, cb, bookmark }: ListItemProps) => {
         <p className="text-start grow">{title}</p>
       </button>
 
-      <button onClick={bookmarkHandler}>
-        <StarIcon
-          stroke={bookmark ? COLORS.primary : COLORS.active}
-          fill={bookmark ? COLORS.primary : "none"}
-        />
+      <button
+        onClick={() =>
+          isBookmark ? removeBookmark(String(id)) : addBookmark(id, title)
+        }
+      >
+        <StarIcon fill={isBookmark ? "black" : "transparent"} />
       </button>
     </li>
   );
