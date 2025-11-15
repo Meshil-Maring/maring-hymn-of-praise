@@ -3,16 +3,12 @@ import BookmarkIcon from "../../../assets/icons/star";
 const BookmarkList = ({
   id,
   title,
-  cb,
+  removeBookmark,
 }: {
   id: string;
   title: string;
-  cb: Function;
+  removeBookmark: Function;
 }) => {
-  const bookmarkHandler = () => {
-    cb(id);
-  };
-
   return (
     <div className="w-full flex flex-col gap-2 justify-center items-center">
       <div className="flex w-full gap-3 items-center">
@@ -22,7 +18,7 @@ const BookmarkList = ({
 
         <p className="text-active">{title}</p>
 
-        <button onClick={bookmarkHandler} className="ml-auto">
+        <button onClick={() => removeBookmark(String(id))} className="ml-auto">
           <BookmarkIcon fill="black" stroke="black" />
         </button>
       </div>

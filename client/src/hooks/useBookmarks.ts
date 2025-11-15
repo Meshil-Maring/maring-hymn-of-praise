@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, use } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export type Bookmark = {
   id: string;
@@ -6,50 +6,60 @@ export type Bookmark = {
 };
 
 export default function useBookmarks() {
-  const [bookmark, setBookmark] = useState<Bookmark[]>([]);
-
   const bookmarkKey = "bookmarkList";
 
-  //   Load from local storage
-  useEffect(() => {
-    const savedBookmark = localStorage.getItem(bookmarkKey);
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
-    savedBookmark && setBookmark(JSON.parse(savedBookmark));
+  // Load bookmarks once
+  useEffect(() => {
+    refreshBookmarks();
   }, []);
 
-  // store in hash table
+  //Refresh function
+  const refreshBookmarks = () => {
+    const saved = localStorage.getItem(bookmarkKey);
+    if (saved) {
+      setBookmarks(JSON.parse(saved));
+    } else {
+      setBookmarks([]);
+    }
+  };
+
+  // Fast lookup (Set)
   const bookmarkSet = useMemo(() => {
-    return new Set(bookmark.map((value) => value.id));
-  }, [bookmark]);
+    return new Set(bookmarks.map((b) => b.id));
+  }, [bookmarks]);
 
-  // add bookmark
+  // Add bookmark
   const addBookmark = (id: string | number, title: string) => {
-    setBookmark((prev) => {
-      const findId = prev.find((value) => value.id == id);
-
-      const updated = !findId ? [...prev, { id: String(id), title }] : prev;
+    setBookmarks((prev) => {
+      const found = prev.some((b) => b.id === String(id));
+      const updated = found
+        ? prev
+        : [...prev, { id: String(id), title }].reverse();
 
       localStorage.setItem(bookmarkKey, JSON.stringify(updated));
-
       return updated;
     });
   };
 
-  // remove bookmark
+  // Remove bookmark
   const removeBookmark = (id: string) => {
-    setBookmark((prev) => {
-      const updated = prev.filter((items) => items.id !== id);
-
+    setBookmarks((prev) => {
+      const updated = prev.filter((b) => b.id !== id);
       localStorage.setItem(bookmarkKey, JSON.stringify(updated));
-
       return updated;
     });
   };
 
-  // check bookmark
-  const isBookmark = (id: string) => {
-    return bookmarkSet.has(id);
-  };
+  // Check bookmark
+  const isBookmark = (id: string) => bookmarkSet.has(id);
 
-  return { addBookmark, removeBookmark, isBookmark };
+  return {
+    bookmarks,
+    addBookmark,
+    removeBookmark,
+    isBookmark,
+    refreshBookmarks,
+  };
 }

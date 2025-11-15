@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-
 import Back from "../../assets/icons/back";
 import BookmarkList from "../../component/nav/header/BookmarkList";
+
+import { useBookmarks } from "../../context/BookmarkContext";
 
 type BookmarkItems = {
   id: string;
@@ -9,61 +9,16 @@ type BookmarkItems = {
 };
 
 const Bookmark = ({ bookmark }: any) => {
-  const [bookmarkList, setBookmarkList] = useState<BookmarkItems[]>([]);
-
-  let arr: string[] | null = null;
-
-  useEffect(() => {
-    const savedBookmark = localStorage.getItem("bookmarkList");
-
-    if (savedBookmark) {
-      try {
-        arr = JSON.parse(savedBookmark);
-      } catch (e) {
-        console.error("Failed to parse bookmarkList from localStorage", e);
-      }
-    }
-
-    fetch("/index.json")
-      .then((res) => res.json())
-      .then((data) => {
-        if (arr && Array.isArray(arr)) {
-          const found = arr
-            .map((value: string) => {
-              const number = Number(value);
-              return data[number - 1];
-            })
-            .reverse();
-          setBookmarkList(found);
-        }
-
-        return data;
-      })
-      .catch((e) => {
-        console.error("Failed to load index.json", e);
-      });
-  }, []);
-
-  // remove bookmark
-  const removeBookmarkHandler = (id: string) => {
-    setBookmarkList((prev) => {
-      const updated = prev.filter((item) => item.id !== id);
-
-      const onlyIds = updated.map((items) => items.id);
-
-      localStorage.setItem("bookmarkList", JSON.stringify(onlyIds));
-      return updated;
-    });
-  };
+  const { removeBookmark, bookmarks } = useBookmarks();
 
   // Render bookmark
   const renderBookmark = () => {
-    return bookmarkList.map((items: BookmarkItems, key) => (
+    return bookmarks.map((items: BookmarkItems, key) => (
       <BookmarkList
         key={key}
         id={items.id}
         title={items.title}
-        cb={removeBookmarkHandler}
+        removeBookmark={removeBookmark}
       />
     ));
   };
@@ -79,7 +34,7 @@ const Bookmark = ({ bookmark }: any) => {
       </nav>
 
       <div className="p-3 h-full flex justify-center overflow-auto">
-        {bookmarkList.length !== 0 ? (
+        {bookmarks.length !== 0 ? (
           <ul className="flex w-full self-start flex-col gap-2">
             {renderBookmark()}
           </ul>

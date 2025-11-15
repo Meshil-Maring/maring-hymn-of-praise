@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   const bookmarkHandler = () => {
-    setBookmarkActive(!bookmarkActive);
+    setBookmarkActive((prev) => !prev);
   };
 
   return (

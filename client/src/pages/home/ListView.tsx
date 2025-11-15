@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import ListItem from "./ListItem";
-import useBookmarks from "../../hooks/useBookmarks";
+import { useBookmarks } from "../../context/BookmarkContext";
 
 const ListView = ({ listType }: { listType: string }) => {
   const [listData, setListData] = useState<{ id: string; title: string }[]>([]);
-
   const { addBookmark, removeBookmark, isBookmark } = useBookmarks();
 
   useEffect(() => {
@@ -13,7 +12,6 @@ const ListView = ({ listType }: { listType: string }) => {
       .then((data) => setListData(data));
   }, []);
 
-  // Sorting logic
   const sortedData = [...listData].sort((a, b) =>
     listType === "Numerical"
       ? a.id.localeCompare(b.id)

@@ -1,7 +1,6 @@
 // @ts-ignore: virtual module provided by Vite PWA plugin
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { useEffect, useState } from "react";
-
 import Header from "../../component/nav/header/Header";
 import Category from "./Category";
 import ListView from "./ListView";
