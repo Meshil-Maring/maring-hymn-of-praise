@@ -28,7 +28,8 @@ export const BookmarkProvider = ({ children }: any) => {
   const addBookmark = (id: string, title: string) => {
     setBookmarks((prev) => {
       if (prev.some((b) => b.id === id)) return prev;
-      const updated = [...prev, { id, title }];
+      const updated = [...prev, { id, title }].reverse();
+
       localStorage.setItem(bookmarkKey, JSON.stringify(updated));
       return updated;
     });
