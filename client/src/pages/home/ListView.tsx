@@ -28,7 +28,7 @@ const ListView = ({ listType }: { listType: string }) => {
           even={index % 2 === 0}
           addBookmark={addBookmark}
           removeBookmark={removeBookmark}
-          isBookmark={isBookmark(String(ele.id))}
+          isBookmark={isBookmark(Number(ele.id))}
         />
       ))}
     </div>

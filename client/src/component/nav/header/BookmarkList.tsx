@@ -6,7 +6,7 @@ const BookmarkList = ({
   title,
   removeBookmark,
 }: {
-  id: string;
+  id: number;
   title: string;
   removeBookmark: Function;
 }) => {

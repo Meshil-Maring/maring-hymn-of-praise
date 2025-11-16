@@ -4,7 +4,7 @@ import BookmarkList from "../../component/nav/header/BookmarkList";
 import { useBookmarks } from "../../context/BookmarkContext";
 
 type BookmarkItems = {
-  id: string;
+  id: number;
   title: string;
 };
 
@@ -16,7 +16,7 @@ const Bookmark = ({ bookmark }: any) => {
     return bookmarks.map((items: BookmarkItems, key) => (
       <BookmarkList
         key={key}
-        id={items.id}
+        id={Number(items.id)}
         title={items.title}
         removeBookmark={removeBookmark}
       />
