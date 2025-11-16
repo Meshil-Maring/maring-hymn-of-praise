@@ -1,4 +1,5 @@
 import "./registerSW";
+import { BookmarkProvider } from "./context/BookmarkContext";
 
 // main.tsx
 import React from "react";
@@ -19,7 +20,9 @@ if ("serviceWorker" in navigator) {
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <MainRoutes />
+      <BookmarkProvider>
+        <MainRoutes />
+      </BookmarkProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

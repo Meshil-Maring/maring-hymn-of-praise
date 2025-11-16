@@ -1,48 +1,22 @@
 import { useState, useEffect } from "react";
 import ListItem from "./ListItem";
-
-type BookmarkList = string[];
+import { useBookmarks } from "../../context/BookmarkContext";
 
 const ListView = ({ listType }: { listType: string }) => {
-  const [bookmarkList, setBookmarkList] = useState<BookmarkList>([]);
   const [listData, setListData] = useState<{ id: string; title: string }[]>([]);
+  const { addBookmark, removeBookmark, isBookmark } = useBookmarks();
 
   useEffect(() => {
-    if (localStorage.getItem("index")) {
-      const index = JSON.parse(localStorage.getItem("index")!);
-      setListData(index);
-    } else {
-      fetch("/index.json")
-        .then((res) => res.json())
-        .then((data) => setListData(data));
-    }
+    fetch("/index.json")
+      .then((res) => res.json())
+      .then((data) => setListData(data));
   }, []);
 
-  useEffect(() => {
-    const saveBookmark = localStorage.getItem("bookmarkList");
-    if (saveBookmark) setBookmarkList(JSON.parse(saveBookmark));
-  }, []);
-
-  // Sorting logic
   const sortedData = [...listData].sort((a, b) =>
     listType === "Numerical"
       ? a.id.localeCompare(b.id)
       : a.title.localeCompare(b.title)
   );
-
-  const addBookmarkListHandler = (id: string) => {
-    setBookmarkList((prev) => {
-      const updated = prev.includes(id)
-        ? prev.filter((item) => item !== id)
-        : [...prev, id];
-
-      localStorage.setItem("bookmarkList", JSON.stringify(updated));
-
-      return updated;
-    });
-  };
-
-  const checkBookmark = (id: string) => bookmarkList.includes(id);
 
   return (
     <div className="grow bg-white relative z-10 py-4 mt-2 rounded-t-2xl h-full overflow-y-auto scrollbar-hidden shadow-sm">
@@ -52,8 +26,9 @@ const ListView = ({ listType }: { listType: string }) => {
           title={ele.title}
           id={ele.id}
           even={index % 2 === 0}
-          cb={addBookmarkListHandler}
-          bookmark={checkBookmark(ele.id)}
+          addBookmark={addBookmark}
+          removeBookmark={removeBookmark}
+          isBookmark={isBookmark(Number(ele.id))}
         />
       ))}
     </div>
