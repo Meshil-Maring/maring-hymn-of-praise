@@ -94,7 +94,10 @@ const SongMain = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen justify-center relative">
+    <div
+      className="flex flex-col h-screen justify-center relative scrollbar-hidden"
+      style={{ height: "calc(var(--vh) * 100)" }}
+    >
       <Navigation id={songId} title={songData.title} />
       <TypeSelect />
 
