@@ -40,7 +40,7 @@ const EditSong = () => {
       {!network && <p>Please try again! No Internet</p>}
 
       <nav className="text-xl  justify-between flex text-center font-bold p-4">
-        <button onClick={() => navigate("/song/4")} className="text-sm">
+        <button onClick={() => navigate(`/song/${id}`)} className="text-sm">
           <Back fill="black" />
         </button>
         <p className="text-sm">
@@ -49,8 +49,8 @@ const EditSong = () => {
         <button></button>
       </nav>
 
-      <form className="flex-1">
-        <ul className="flex flex-1 flex-col overflow-y-auto h-10/12">
+      <form className="flex flex-col flex-1 min-h-0">
+        <ul className="flex-1 overflow-y-auto min-h-0">
           {song?.sections.map((section, sIndex) => {
             let currentVerseIndex = verseIndex;
 
@@ -59,7 +59,7 @@ const EditSong = () => {
             }
 
             return (
-              <li key={sIndex} className="mb-4 mt-8 ml-4">
+              <li key={sIndex} className="mb-4 mt-8 mr-6 ml-4">
                 <p className="font-semibold mb-2 uppercase">
                   {section.type === "chorus"
                     ? "Chorus"
@@ -86,11 +86,11 @@ const EditSong = () => {
             );
           })}
         </ul>
-      </form>
 
-      <button className="bg-blue-700  px-8 py-3 text-white w-fit mt-2 ml-2 cursor-pointer">
-        Contribute
-      </button>
+        <button className="bg-blue-700 px-8 py-3 flex-none text-white w-fit mt-2 ml-2 cursor-pointer">
+          Contribute
+        </button>
+      </form>
     </div>
   );
 };
