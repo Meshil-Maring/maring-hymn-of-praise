@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useNetworkStatus from "../../hooks/useBookmarks";
+import Back from "../../assets/icons/back";
 
 const EditSong = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   type Section = {
     type: string;
@@ -34,49 +36,61 @@ const EditSong = () => {
   }, [id]);
 
   return (
-    <div>
+    <div className="h-screen flex flex-col">
       {!network && <p>Please try again! No Internet</p>}
 
-      <h1 className="text-xl text-center font-bold mt-8">
-        {song?.id}. {song?.title}
-      </h1>
+      <nav className="text-xl  justify-between flex text-center font-bold p-4">
+        <button onClick={() => navigate("/song/4")} className="text-sm">
+          <Back fill="black" />
+        </button>
+        <p className="text-sm">
+          {song?.id}. {song?.title}
+        </p>
+        <button></button>
+      </nav>
 
-      <ul className="h-screen overflow-x-auto">
-        {song?.sections.map((section, sIndex) => {
-          let currentVerseIndex = verseIndex;
+      <form className="flex-1">
+        <ul className="flex flex-1 flex-col overflow-y-auto h-10/12">
+          {song?.sections.map((section, sIndex) => {
+            let currentVerseIndex = verseIndex;
 
-          if (section.type !== "chorus") {
-            verseIndex++;
-          }
+            if (section.type !== "chorus") {
+              verseIndex++;
+            }
 
-          return (
-            <li key={sIndex} className="mb-4 w-11/12 mt-8 ml-4">
-              <p className="font-semibold mb-2 uppercase">
-                {section.type === "chorus"
-                  ? "Chorus"
-                  : `verse ${currentVerseIndex}`}
-              </p>
+            return (
+              <li key={sIndex} className="mb-4 mt-8 ml-4">
+                <p className="font-semibold mb-2 uppercase">
+                  {section.type === "chorus"
+                    ? "Chorus"
+                    : `verse ${currentVerseIndex}`}
+                </p>
 
-              {section.lines.map((line, lIndex) => (
-                <input
-                  key={lIndex}
-                  type="text"
-                  onChange={(e) => {
-                    if (!song) return;
+                {section.lines.map((line, lIndex) => (
+                  <input
+                    key={lIndex}
+                    type="text"
+                    onChange={(e) => {
+                      if (!song) return;
 
-                    const newSong = structuredClone(song);
-                    newSong.sections[sIndex].lines[lIndex] = e.target.value;
+                      const newSong = structuredClone(song);
+                      newSong.sections[sIndex].lines[lIndex] = e.target.value;
 
-                    setSong(newSong);
-                  }}
-                  value={line}
-                  className="border p-1 m-1 w-full"
-                />
-              ))}
-            </li>
-          );
-        })}
-      </ul>
+                      setSong(newSong);
+                    }}
+                    value={line}
+                    className="border p-1 m-1 w-full"
+                  />
+                ))}
+              </li>
+            );
+          })}
+        </ul>
+      </form>
+
+      <button className="bg-blue-700  px-8 py-3 text-white w-fit mt-2 ml-2 cursor-pointer">
+        Contribute
+      </button>
     </div>
   );
 };
