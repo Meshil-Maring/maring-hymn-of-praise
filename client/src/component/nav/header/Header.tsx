@@ -7,10 +7,12 @@ import { COLORS } from "../../../constants/color";
 
 import Search from "./Search";
 import Bookmark from "../../../pages/home/Bookmark";
+import LeftNavigation from "../../../component/nav/header/LeftNavigation";
 
 const Header = () => {
   const [searchActive, setSearchActive] = useState<boolean>(false);
   const [bookmarkActive, setBookmarkActive] = useState<boolean>(false);
+  const [navigation, setNavigation] = useState<boolean>(false);
 
   const searchClickHandler = () => {
     setSearchActive(!searchActive);
@@ -20,17 +22,26 @@ const Header = () => {
     setBookmarkActive((prev) => !prev);
   };
 
+  const openNavigate = () => {
+    return setNavigation((prev) => !prev);
+  };
+
   return (
     <>
-      <header className="flex h-18 items-center justify-between px-2 ">
-        <MenuIcon fill={COLORS.primary} stroke={COLORS.primary} size={24} />
+      <header className="flex h-[72px] items-center justify-between px-2">
+        <button onClick={openNavigate}>
+          <MenuIcon fill={COLORS.primary} stroke={COLORS.primary} size={24} />
+        </button>
+
+        {navigation && <LeftNavigation navigateHandler={openNavigate} />}
+
         {!searchActive ? (
           <div className="flex grow justify-between items-center mr-2">
-            <h1 className="text-md font-bold text-center w-full">
+            <h1 className="text-base font-bold text-center w-full">
               DUNPUYA MATHANGNA LAA
             </h1>
 
-            <button className="" onClick={searchClickHandler}>
+            <button onClick={searchClickHandler}>
               <SearchIcon stroke={COLORS.primary} />
             </button>
           </div>
