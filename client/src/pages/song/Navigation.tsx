@@ -24,8 +24,8 @@ const Navigation = ({ id, title }: any) => {
   const closeNavHandler = () => setOpenNav(false);
 
   const navigatePage = (value: string) => {
-    if (value === "edit") navigate(`/song/${numericId}/edit`);
-    if (value === "report") navigate(`/song/${numericId}/report`);
+    if (value === "edit") navigate(`/song/edit/${numericId}`);
+    if (value === "report") navigate(`/song/report/${numericId}`);
   };
 
   const shareHandling = () => {
@@ -57,6 +57,7 @@ const Navigation = ({ id, title }: any) => {
             className="action-menu flex flex-col items-start mt-14 bg-active gap-4 w-fit px-6 rounded-xl text-white py-6 ml-auto mr-4 z-20 shadow-lg"
           >
             <button
+              className="w-full text-start"
               type="button"
               onClick={() =>
                 isBookmark(numericId)
@@ -67,15 +68,27 @@ const Navigation = ({ id, title }: any) => {
               {isBookmark(numericId) ? "Remove Bookmark" : "Add Bookmark"}
             </button>
 
-            <button type="button" onClick={() => navigatePage("edit")}>
+            <button
+              className="w-full text-start"
+              type="button"
+              onClick={() => navigatePage("edit")}
+            >
               Edit
             </button>
 
-            <button type="button" onClick={shareHandling}>
+            <button
+              className="w-full text-start"
+              type="button"
+              onClick={shareHandling}
+            >
               Share
             </button>
 
-            <button type="button" onClick={() => navigatePage("report")}>
+            <button
+              className="w-full text-start"
+              type="button"
+              onClick={() => navigatePage("report")}
+            >
               Report
             </button>
           </menu>
