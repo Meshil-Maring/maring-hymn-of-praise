@@ -16,7 +16,7 @@ const Signup = () => {
       "https://maring-hymn-of-praise-server.onrender.com/auth/send-otp",
       {
         method: "POST",
-        headers: { "Content-type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       }
     );
