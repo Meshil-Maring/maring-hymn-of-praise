@@ -1,3 +1,5 @@
 exports.signup = async (req, res) => {
-  console.log(req.body);
+  const data = await JSON.parse(req.body);
+
+  res.send(data);
 };

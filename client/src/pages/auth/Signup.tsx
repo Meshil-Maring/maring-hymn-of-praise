@@ -6,6 +6,25 @@ import Label from "./component/Label";
 const Signup = () => {
   const [formData, setFormData] = useState({ name: "", email: "" });
 
+  const formHandler = async (e: any) => {
+    e.preventDefault();
+
+    // prevent submit if invalid
+    if (!validForm) return;
+
+    const res = await fetch(
+      "https://maring-hymn-of-praise-server.onrender.com/auth/send-otp",
+      {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    const data = await res.json();
+    console.log("Server response:", data);
+  };
+
   // track if user touched the input
   const [firstTouch, setFirstTouch] = useState({
     username: false,
@@ -17,7 +36,6 @@ const Signup = () => {
   const inputHandler = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    // mark that user touched that field
     setFirstTouch({
       ...firstTouch,
       [e.target.name === "name" ? "username" : "email"]: true,
@@ -30,12 +48,11 @@ const Signup = () => {
     const isNameValid = formData.name.length >= 3;
     const isEmailValid = emailRegex.test(formData.email);
 
-    // enable button when both are valid
     setValidForm(isNameValid && isEmailValid);
   }, [formData]);
 
   return (
-    <form className="flex flex-col p-8 gap-2">
+    <form className="flex flex-col p-8 gap-2" onSubmit={formHandler}>
       {/* username */}
       <Label title="User name" />
       <input

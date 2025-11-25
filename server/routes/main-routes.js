@@ -7,6 +7,6 @@ const { signup } = require("../controller/signup");
 
 router.get("/", home);
 router.get("/song/:id", song);
-router.post("/submit", signup);
+router.post("/auth/send-otp", signup);
 
 module.exports = router;
