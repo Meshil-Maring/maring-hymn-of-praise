@@ -1,5 +1,7 @@
-exports.signup = async (req, res) => {
-  const data = await JSON.parse(req.body);
+const express = require("express");
 
-  res.send(data);
+exports.signup = async (req, res) => {
+  const data = req.body;
+
+  res.json({ message: "OTP imformation", data });
 };
