@@ -14,9 +14,7 @@ const LeftNavigation = ({ navigateHandler }: any) => {
         className="w-3/4 bg-bg-white2 h-full p-2 flex gap-2 flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <Button title={"My Contribute"} />
-        <Button title={"My Book"} />
-        <Button title={"My Contribute"} />
+        <Button title={"Log in "} url="/signup" />
       </div>
     </div>
   );
